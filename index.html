@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StockFlow Suite | Gudang, Order, Packing & Retur</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#e8edf6;background:#0c1220}
+*{box-sizing:border-box}body{margin:0}
+.shell{max-width:920px;margin:auto;padding:28px 18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.brand{font-size:28px;font-weight:800;letter-spacing:-1px}.brand span{color:#7da8ff}
+.muted{color:#99a8c1;font-size:14px;line-height:1.5}
+.pill{background:#132f28;border:1px solid #266654;color:#9df0cc;padding:8px 13px;border-radius:99px;font-size:12px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:#151f30;border:1px solid #29374e;border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.card h2{margin:0 0 6px;font-size:19px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;border:0;border-radius:11px;padding:11px 16px;background:#3269e8;color:#fff;font-weight:650;font-size:14px}
+.btn.secondary{background:#27364d;color:#dce6f7}
+.notice{background:#1d2b42;border:1px solid #3c5378;border-radius:14px;padding:14px 16px;font-size:13px;color:#d6e2f5;margin-top:20px;line-height:1.6}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <div>
+      <div class="brand">📦 Stock<span>Flow</span> Suite</div>
+      <div class="muted">Portal akses cepat Inventaris Gudang serta Order, Packing &amp; Retur</div>
+    </div>
+    <div class="pill">● Lokal / Browser Storage (stockflow_v1)</div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div>
+        <h2>1. Master Stok &amp; Transaksi Gudang</h2>
+        <div class="muted">Kelola master barang, barang masuk (IN), barang keluar (OUT), riwayat transaksi, dan backup JSON.</div>
+      </div>
+      <div><a href="stockflow.html" class="btn">Buka StockFlow Gudang →</a></div>
+    </div>
+
+    <div class="card">
+      <div>
+        <h2>2. Order Draft, Packing &amp; Retur</h2>
+        <div class="muted">Kelola pesanan Shopee, Tokopedia, dan Lazada, aturan ekspedisi &amp; kilat, revisi item/qty, cetak slip, dan retur.</div>
+      </div>
+      <div><a href="stockflow-order-packing.html" class="btn">Buka Order &amp; Packing →</a></div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <b>Catatan Penyimpanan:</b> Data tersimpan di <code>localStorage</code> browser pada perangkat dan domain yang sama (termasuk saat dijalankan di GitHub Pages). Gunakan fitur <b>Backup JSON</b> secara berkala untuk memindahkan atau mengamankan data.
+  </div>
+</main>
+</body>
+</html>
