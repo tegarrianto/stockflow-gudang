@@ -1,124 +1,163 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StockFlow OMS | Order, Packing & Retur Gudang</title>
-<style>
-:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#e8edf6;background:#0c1220}
-*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}
-.shell{max-width:1240px;margin:auto;padding:22px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.brand{font-size:26px;font-weight:800;letter-spacing:-1px}.brand span{color:#7da8ff}
-.muted{color:#99a8c1;font-size:13px}
-.pill{background:#19263d;border:1px solid #34445d;padding:8px 12px;border-radius:99px;font-size:12px;display:inline-flex;align-items:center;gap:6px}
-.pill.ok{border-color:#266654;background:#132f28;color:#9df0cc}
-.nav{display:flex;gap:8px;overflow:auto;margin:20px 0}
-.nav button{border:1px solid #28374f;background:#151e30;color:#bdcbe0;padding:10px 16px;border-radius:11px;white-space:nowrap;font-weight:500}
-.nav button.active{background:#3167df;color:white;border-color:#3167df}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.card,.panel{background:#151f30;border:1px solid #29374e;border-radius:16px;padding:18px}
-.label{color:#a6b3c8;font-size:13px}.num{font-size:28px;font-weight:800;margin-top:8px}
-.panel{margin-top:18px}.panel h2{margin:0 0 14px;font-size:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.formgrid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-label{font-size:12px;color:#bdc9dc;display:block;margin-bottom:5px;font-weight:500}
-input,select{width:100%;background:#0e1727;border:1px solid #36445b;border-radius:10px;padding:10px 11px;color:#eef3ff;outline:none;font-size:13px}
-input:focus,select:focus{border-color:#6d9afa}
-input[type="checkbox"]{width:auto;accent-color:#3269e8;transform:scale(1.15);cursor:pointer}
-.btn{border:0;border-radius:10px;padding:10px 14px;background:#3269e8;color:white;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
-.btn:hover{filter:brightness(1.08)}
-.btn.secondary{background:#27364d;color:#dce6f7}
-.btn.success{background:#1e6b52;color:#d6ffef}
-.btn.warning{background:#8a5a19;color:#ffebc7}
-.btn.danger{background:#963d50;color:#ffdce3}
-.btn.sm{padding:6px 10px;font-size:12px;border-radius:8px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:700px}
-th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #2b384d;font-size:13px;vertical-align:top}
-th{color:#9eb0ca;font-weight:600;background:#121b2b}
-td{color:#e5ecf8}
-.tag{border-radius:99px;padding:3px 9px;font-size:11px;background:#26374c;display:inline-block;font-weight:600;white-space:nowrap}
-.tag.shopee{background:#592718;color:#ffb499;border:1px solid #8a3a22}
-.tag.tokopedia{background:#17472a;color:#98f5bc;border:1px solid #267043}
-.tag.lazada{background:#1e295e;color:#a8baff;border:1px solid #33469c}
-.tag.kilat{background:#663c0c;color:#ffd584;border:1px solid #9c5b11}
-.tag.instan{background:#521c38;color:#ffa8d4}
-.tag.sameday{background:#1d425c;color:#99d6ff}
-.tag.reguler{background:#26374c;color:#c2d1e8}
-.tag.draft{background:#333c4d;color:#cbd5e1}
-.tag.packing{background:#4d3b18;color:#fde08d}
-.tag.shipped{background:#184a3c;color:#99f6d4}
-.tag.retur{background:#4f222d;color:#fda4af}
-.tag.good{background:#1e473e;color:#a1f0ce}
-.tag.low{background:#563e24;color:#ffd28a}
-.tag.out{background:#512b36;color:#ffa7b3}
-.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-.toolbar input,.toolbar select{max-width:240px}
-.empty{color:#99a8c1;padding:24px;text-align:center}
-.hidden{display:none!important}
-.notice{background:#1d2b42;border:1px solid #3c5378;border-radius:12px;padding:12px;font-size:13px;margin-top:12px}
-.item-builder{background:#0f1726;border:1px solid #29374e;border-radius:12px;padding:14px;margin-top:14px}
-.item-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#162236;border-radius:8px;margin-top:8px;gap:10px}
-.check-box{display:flex;align-items:center;gap:8px;background:#0e1727;border:1px solid #36445b;border-radius:10px;padding:10px 12px;height:40px}
-.check-box.disabled{opacity:.45;cursor:not-allowed}
-#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#e8f0ff;color:#14213b;padding:12px 18px;border-radius:12px;box-shadow:0 10px 40px #0007;display:none;max-width:90vw;z-index:50;font-weight:500}
-/* Modal */
-.modal-bg{position:fixed;inset:0;background:rgba(6,10,18,.78);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
-.modal{background:#151f30;border:1px solid #364969;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow:auto;padding:20px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:1px solid #29374e;padding-bottom:10px}
-/* Print Packing Slip */
-@media print{
-  body *{visibility:hidden}
-  #print-area, #print-area *{visibility:visible}
-  #print-area{position:fixed;left:0;top:0;width:100%;background:white;color:black;padding:20px;font-family:sans-serif}
-  #print-area table{min-width:100%;border-collapse:collapse;margin-top:12px}
-  #print-area th,#print-area td{border:1px solid #333;padding:8px;color:black;background:none}
-}
-@media(max-width:820px){
-  .shell{padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.grid,.formgrid,.formgrid-2{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>StockFlow & OrderPack | Inventory & Order Gudang</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      color: #e8edf6;
+      background: #0c1220;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding-bottom: 50px; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; transition: 0.15s opacity, 0.15s transform; }
+    button:hover { opacity: 0.92; }
+    button:active { transform: scale(0.98); }
+    .shell { max-width: 1260px; margin: auto; padding: 22px; }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .brand { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+    .brand span { color: #7da8ff; }
+    .muted { color: #99a8c1; font-size: 13px; }
+    .pill { background: #19263d; border: 1px solid #34445d; padding: 8px 12px; border-radius: 99px; font-size: 12px; }
+    .nav { display: flex; gap: 8px; overflow: auto; margin: 22px 0; padding-bottom: 4px; }
+    .nav button { border: 1px solid #28374f; background: #151e30; color: #bdcbe0; padding: 11px 17px; border-radius: 11px; white-space: nowrap; font-weight: 500; }
+    .nav button.active { background: #3167df; color: white; border-color: #3167df; font-weight: 600; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
+    .card, .panel { background: #151f30; border: 1px solid #29374e; border-radius: 16px; padding: 18px; }
+    .label { color: #a6b3c8; font-size: 13px; }
+    .num { font-size: 28px; font-weight: 800; margin-top: 8px; }
+    .panel { margin-top: 18px; }
+    .panel h2 { margin: 0 0 14px; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .panel h3 { margin: 16px 0 10px; font-size: 15px; color: #c7d4ea; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .formgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .formgrid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    label { font-size: 12px; color: #bdc9dc; display: block; margin-bottom: 5px; font-weight: 500; }
+    input, select, textarea {
+      width: 100%; background: #0e1727; border: 1px solid #36445b; border-radius: 10px;
+      padding: 10px 11px; color: #eef3ff; outline: none; font-size: 13px;
+    }
+    input:focus, select:focus, textarea:focus { border-color: #6d9afa; }
+    input[readonly] { background: #121c2e; color: #9eb0ca; cursor: not-allowed; }
+    .btn { border: 0; border-radius: 10px; padding: 10px 15px; background: #3269e8; color: white; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+    .btn.secondary { background: #27364d; color: #e2eaf8; }
+    .btn.success { background: #1e7e58; color: white; }
+    .btn.warning { background: #b4691e; color: white; }
+    .btn.danger { background: #963d50; color: white; }
+    .btn.sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+    .tablewrap { overflow: auto; border-radius: 10px; border: 1px solid #253349; }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid #253349; font-size: 13px; vertical-align: middle; }
+    th { color: #9eb0ca; font-weight: 600; background: #111929; }
+    td { color: #e5ecf8; }
+    tr:last-child td { border-bottom: 0; }
+    .tag { border-radius: 99px; padding: 4px 9px; font-size: 11px; font-weight: 600; display: inline-block; white-space: nowrap; }
+    .tag.low { background: #563e24; color: #ffd28a; }
+    .tag.out { background: #512b36; color: #ffa7b3; }
+    .tag.good { background: #1e473e; color: #a1f0ce; }
+    .tag.info { background: #1e3a6e; color: #9ec5ff; }
+    .tag.warn { background: #4a3519; color: #ffcf87; }
+    .tag.shopee { background: #5c2718; color: #ff9d7e; border: 1px solid #8a3820; }
+    .tag.tokopedia { background: #184729; color: #87f5ad; border: 1px solid #256e40; }
+    .tag.lazada { background: #1e2963; color: #a3b5ff; border: 1px solid #33459e; }
+    .tag.kilat { background: #591c38; color: #ff8ec2; border: 1px solid #8f2958; }
+    .toolbar { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+    .toolbar input, .toolbar select { max-width: 240px; }
+    .empty { color: #99a8c1; padding: 24px; text-align: center; }
+    .hint { font-size: 12px; color: #93a5be; margin-top: 8px; }
+    .hidden { display: none !important; }
+    .notice { background: #1d2b42; border: 1px solid #3c547a; border-radius: 12px; padding: 12px; font-size: 13px; margin-top: 14px; line-height: 1.5; }
+    .item-box { background: #0f1726; border: 1px solid #2b3a54; border-radius: 12px; padding: 14px; margin-top: 12px; }
+    .price-summary { background: #10192b; border: 1px dashed #3d5278; border-radius: 12px; padding: 14px; margin-top: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .price-item span { display: block; font-size: 12px; color: #99a8c1; }
+    .price-item strong { font-size: 17px; color: #fff; }
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(5, 9, 17, 0.8); z-index: 50;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal {
+      background: #151f30; border: 1px solid #344663; border-radius: 16px; width: 100%; max-width: 820px;
+      max-height: 90vh; overflow-y: auto; padding: 22px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .packing-slip {
+      background: #ffffff; color: #111827; padding: 24px; border-radius: 10px; font-family: 'Courier New', Courier, monospace;
+    }
+    .packing-slip h3 { color: #111827; margin: 0 0 8px; border-bottom: 2px dashed #111827; padding-bottom: 8px; }
+    .packing-slip table { min-width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .packing-slip th, .packing-slip td { color: #111827; border: 1px solid #374151; padding: 6px 8px; background: transparent; font-size: 12px; }
+    #toast {
+      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+      background: #e8f0ff; color: #14213b; padding: 12px 18px; border-radius: 12px;
+      box-shadow: 0 10px 40px #0007; display: none; max-width: 90vw; z-index: 100; font-weight: 600; font-size: 13px;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area { position: fixed; left: 0; top: 0; width: 100%; background: #fff; color: #000; padding: 10px; }
+      .no-print { display: none !important; }
+    }
+    @media(max-width: 860px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .grid, .formgrid, .formgrid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 <main class="shell">
   <header class="top">
     <div>
-      <div class="brand">📦 Stock<span>Flow</span> <span style="font-size:15px;font-weight:600;color:#99a8c1">• Order, Packing & Retur</span></div>
-      <div class="muted">Terhubung langsung ke database <b>StockFlow Inventory (stockflow_v1)</b></div>
+      <div class="brand">📦 Stock<span>Flow</span> <span style="font-size:15px;font-weight:600;color:#99a8c1">+ Order & Packing</span></div>
+      <div class="muted">Inventory gudang terintegrasi • Shopee, Tokopedia & Lazada</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <div class="pill ok" id="sync-status">● Terhubung ke StockFlow</div>
-      <a href="stockflow.html" class="btn secondary sm" style="text-decoration:none">↗ Buka StockFlow Gudang</a>
-    </div>
+    <div class="pill">● Terhubung ke Database Lokal (stockflow_v1)</div>
   </header>
 
   <nav class="nav">
-    <button class="active" data-tab="create">1. Buat Order Draft</button>
-    <button data-tab="drafts">2. Antrean Draft & Packing <span id="badge-draft" class="tag" style="margin-left:4px">0</span></button>
-    <button data-tab="shipped">3. Terkirim (Outbound)</button>
-    <button data-tab="returns">4. Barang Retur</button>
-    <button data-tab="stock">5. Cek Stok Gudang</button>
+    <button class="active" data-tab="dashboard">📊 Dashboard</button>
+    <button data-tab="orders">🛒 Order & Packing Draft</button>
+    <button data-tab="returns">↩️ Retur Barang</button>
+    <button data-tab="products">🏷️ Master Barang</button>
+    <button data-tab="transaction">🔄 Inbound / Outbound</button>
+    <button data-tab="history">📜 Riwayat Stok</button>
+    <button data-tab="backup">💾 Backup & Restore</button>
   </nav>
 
-  <!-- Summary Cards -->
-  <div class="stats" style="margin-bottom:18px">
-    <div class="card"><div class="label">Order Draft</div><div class="num" id="st-draft">0</div></div>
-    <div class="card"><div class="label">Siap / Proses Packing</div><div class="num" id="st-packing">0</div></div>
-    <div class="card"><div class="label">Pesanan Kilat (Shopee)</div><div class="num" id="st-kilat" style="color:#ffd584">0</div></div>
-    <div class="card"><div class="label">Total Retur Diproses</div><div class="num" id="st-retur">0</div></div>
-  </div>
+  <!-- DASHBOARD -->
+  <section id="dashboard">
+    <div class="stats">
+      <div class="card"><div class="label">Jenis barang (SKU)</div><div class="num" id="s-products">0</div></div>
+      <div class="card"><div class="label">Total unit stok fisik</div><div class="num" id="s-stock">0</div></div>
+      <div class="card"><div class="label">Draft / Siap Packing</div><div class="num" id="s-drafts" style="color:#7da8ff">0</div></div>
+      <div class="card"><div class="label">Stok menipis / Habis</div><div class="num" id="s-low" style="color:#ffd28a">0</div></div>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <h2>⚠️ Perlu Restock</h2>
+        <div id="low-list"></div>
+      </div>
+      <div class="panel">
+        <h2>🕒 Aktivitas Stok Terbaru</h2>
+        <div id="recent-list"></div>
+      </div>
+    </div>
+    <div class="notice">
+      <b>Integrasi Otomatis:</b> Setiap <b>Packing Draft</b> yang dikonfirmasi selesai packing (<i>Siap Kirim / Packed</i>) akan otomatis memotong stok di Master Barang dan tercatat sebagai transaksi <b>OUT</b> di Riwayat Stok. Sebaliknya, <b>Barang Retur</b> dengan kondisi <i>Layak Jual Kembali</i> otomatis menambah stok sebagai transaksi <b>IN</b>.
+    </div>
+  </section>
 
-  <!-- TAB 1: BUAT ORDER DRAFT -->
-  <section id="tab-create">
+  <!-- ORDER & PACKING DRAFT -->
+  <section id="orders" class="hidden">
     <div class="panel">
-      <h2>Buat Order Draft Baru</h2>
+      <h2 id="order-form-title">➕ Buat Order & Packing Draft Baru</h2>
       <form id="order-form">
+        <input type="hidden" id="edit-order-id" value="">
         <div class="formgrid">
           <div>
-            <label for="ord-channel">Marketplace / Aplikasi *</label>
+            <label for="ord-channel">Aplikasi / Marketplace *</label>
             <select id="ord-channel" required>
               <option value="Shopee">Shopee</option>
               <option value="Tokopedia">Tokopedia</option>
@@ -126,731 +165,892 @@ td{color:#e5ecf8}
             </select>
           </div>
           <div>
-            <label for="ord-courier">Jenis Ekspedisi *</label>
-            <select id="ord-courier" required>
-              <option value="Reguler">Reguler</option>
-              <option value="Sameday">Sameday</option>
-              <option value="Instan">Instan</option>
-            </select>
+            <label for="ord-number">No. Pesanan / Resi *</label>
+            <input id="ord-number" required placeholder="Contoh: 261126ABC1234">
           </div>
           <div>
-            <label>Prioritas Pengiriman</label>
-            <label class="check-box" id="kilat-wrapper" for="ord-kilat">
-              <input type="checkbox" id="ord-kilat">
-              <span>⚡ Pesanan Kilat (Khusus Shopee)</span>
-            </label>
+            <label for="ord-buyer">Nama Penerima / Pembeli *</label>
+            <input id="ord-buyer" required placeholder="Nama pembeli">
           </div>
           <div>
-            <label for="ord-no">No. Pesanan / Resi *</label>
-            <input id="ord-no" required placeholder="Contoh: 261125ABC123">
+            <label for="ord-service-type">Jenis Layanan Ekspedisi *</label>
+            <select id="ord-service-type" required></select>
           </div>
           <div>
-            <label for="ord-buyer">Nama Pembeli / Penerima *</label>
-            <input id="ord-buyer" required placeholder="Nama penerima">
+            <label for="ord-courier">Nama Jasa Ekspedisi / Kurir *</label>
+            <select id="ord-courier" required></select>
           </div>
           <div>
-            <label for="ord-note">Catatan Packing (Opsional)</label>
-            <input id="ord-note" placeholder="Contoh: Bubble wrap tebal / fragile">
+            <label for="ord-packer">Petugas Admin / Packer</label>
+            <input id="ord-packer" placeholder="Nama petugas gudang">
           </div>
         </div>
 
-        <div class="item-builder">
-          <div style="font-weight:600;font-size:14px;margin-bottom:10px">Tambah Barang ke Draft</div>
-          <div class="formgrid" style="grid-template-columns:2fr 1fr auto;align-items:end">
-            <div>
-              <label for="pick-sku">Pilih / Ketik SKU dari Master StockFlow</label>
-              <input id="pick-sku" list="sku-datalist" placeholder="Ketik SKU atau nama barang..." autocomplete="off">
-              <datalist id="sku-datalist"></datalist>
-            </div>
-            <div>
-              <label for="pick-qty">Kuantiti</label>
-              <input id="pick-qty" type="number" min="1" step="1" value="1">
-            </div>
-            <div>
-              <button type="button" class="btn secondary" id="btn-add-item">+ Tambah Item</button>
-            </div>
+        <div id="kilat-badge-box" class="notice hidden" style="border-color:#8f2958;background:#2b1523;padding:9px 12px;margin-top:10px">
+          ⚡ <b>Pesanan Kilat Shopee Aktif:</b> Prioritaskan pengemasan segera agar tidak melewati batas waktu pengiriman kilat!
+        </div>
+
+        <div class="item-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+            <strong style="font-size:14px">📦 Daftar Barang & Rincian Harga (Editable)</strong>
+            <button type="button" class="btn secondary sm" id="add-order-item-btn">+ Tambah Baris Barang</button>
           </div>
-          <div id="pick-stock-hint" class="muted" style="margin-top:6px">Pilih SKU untuk melihat sisa stok gudang.</div>
-          <div id="draft-items-list" style="margin-top:12px"></div>
+          <div class="tablewrap">
+            <table style="min-width:780px">
+              <thead>
+                <tr>
+                  <th style="width:28%">Pilih SKU Barang *</th>
+                  <th style="width:10%">Stok</th>
+                  <th style="width:11%">Qty *</th>
+                  <th style="width:16%">Harga Awal (Rp)</th>
+                  <th style="width:15%">Diskon (Rp)</th>
+                  <th style="width:15%">Harga Akhir (Rp)</th>
+                  <th style="width:5%"></th>
+                </tr>
+              </thead>
+              <tbody id="order-items-tbody"></tbody>
+            </table>
+          </div>
+          <div class="hint">* Harga awal otomatis terisi dari Master Barang (jika diatur), namun tetap dapat diedit manual per baris pesanan.</div>
+        </div>
+
+        <div class="formgrid-2" style="margin-top:12px">
+          <div>
+            <label for="ord-extra-discount">Diskon Tambahan / Voucher Toko (Rp)</label>
+            <input id="ord-extra-discount" type="number" min="0" step="1" value="0">
+          </div>
+          <div>
+            <label for="ord-note">Catatan Packing (Bubble wrap, fragile, dll)</label>
+            <input id="ord-note" placeholder="Contoh: Tambah extra bubble wrap">
+          </div>
+        </div>
+
+        <div class="price-summary">
+          <div class="price-item"><span>Total Harga Awal</span><strong id="sum-gross">Rp 0</strong></div>
+          <div class="price-item"><span>Total Diskon Item + Voucher</span><strong id="sum-disc" style="color:#ffa7b3">- Rp 0</strong></div>
+          <div class="price-item"><span>Total Harga Akhir (Netto)</span><strong id="sum-net" style="color:#a1f0ce">Rp 0</strong></div>
         </div>
 
         <div class="actions">
-          <button type="submit" class="btn">Simpan ke Order Draft</button>
-          <button type="button" class="btn secondary" id="btn-reset-form">Reset Form</button>
+          <button type="submit" class="btn" id="save-draft-btn">💾 Simpan sebagai Packing Draft</button>
+          <button type="button" class="btn secondary hidden" id="cancel-edit-btn">Batal Revisi</button>
         </div>
       </form>
     </div>
-  </section>
 
-  <!-- TAB 2: ANTREAN DRAFT & PACKING -->
-  <section id="tab-drafts" class="hidden">
     <div class="panel">
       <div class="toolbar">
-        <h2 style="margin:0">Antrean Order Draft & Packing</h2>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <select id="filter-channel">
+        <h2>📋 Daftar Order & Packing Draft</h2>
+        <div class="actions" style="margin:0">
+          <select id="filter-ord-channel">
             <option value="">Semua Aplikasi</option>
             <option value="Shopee">Shopee</option>
             <option value="Tokopedia">Tokopedia</option>
             <option value="Lazada">Lazada</option>
           </select>
-          <select id="filter-courier">
-            <option value="">Semua Ekspedisi</option>
-            <option value="Instan">Instan</option>
-            <option value="Sameday">Sameday</option>
-            <option value="Reguler">Reguler</option>
+          <select id="filter-ord-status">
+            <option value="">Semua Status</option>
+            <option value="DRAFT">Draft Packing</option>
+            <option value="PACKED">Selesai Packing (Stok Terpotong)</option>
+            <option value="RETURNED">Diretur</option>
           </select>
-          <input id="search-draft" placeholder="Cari No. Pesanan / Pembeli...">
+          <input id="search-orders" placeholder="Cari no. pesanan / pembeli / resi...">
         </div>
-      </div>
-      <div class="notice" style="margin-bottom:14px">
-        💡 <b>Alur Stok:</b> Selama status masih <b>Draft</b> atau <b>Packing</b>, barang masih bisa direvisi (edit item/qty) dan stok gudang belum terpotong. Klik <b>Serahkan Kurir (Outbound)</b> untuk memotong stok otomatis di StockFlow.
       </div>
       <div class="tablewrap">
         <table>
           <thead>
             <tr>
-              <th>No. Pesanan & Waktu</th>
-              <th>Aplikasi & Ekspedisi</th>
-              <th>Pembeli & Catatan</th>
-              <th>Daftar Barang (Qty)</th>
+              <th>Waktu & Aplikasi</th>
+              <th>No. Pesanan & Pembeli</th>
+              <th>Ekspedisi</th>
+              <th>Item & Qty</th>
+              <th>Rincian Harga</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody id="draft-rows"></tbody>
+          <tbody id="orders-tbody"></tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- TAB 3: TERKIRIM (OUTBOUND) -->
-  <section id="tab-shipped" class="hidden">
+  <!-- RETUR BARANG -->
+  <section id="returns" class="hidden">
     <div class="panel">
-      <div class="toolbar">
-        <h2 style="margin:0">Riwayat Order Terkirim (Tercatat Outbound)</h2>
-        <input id="search-shipped" placeholder="Cari No. Pesanan / Pembeli / SKU...">
-      </div>
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Waktu Kirim</th>
-              <th>No. Pesanan</th>
-              <th>Aplikasi & Ekspedisi</th>
-              <th>Pembeli</th>
-              <th>Barang Terkirim</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="shipped-rows"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- TAB 4: BARANG RETUR -->
-  <section id="tab-returns" class="hidden">
-    <div class="panel">
-      <h2>Input Barang Retur</h2>
+      <h2>↩️ Input Barang Retur Marketplace</h2>
       <form id="return-form">
         <div class="formgrid">
           <div>
-            <label for="ret-order">Ambil dari Order Terkirim (Opsional)</label>
-            <select id="ret-order">
-              <option value="">-- Input Manual / Pilih No. Pesanan --</option>
+            <label for="ret-order-select">Ambil dari Pesanan Selesai (Opsional)</label>
+            <select id="ret-order-select">
+              <option value="">-- Input Manual / Pilih Order --</option>
             </select>
           </div>
           <div>
-            <label for="ret-ref">No. Pesanan / Resi Retur *</label>
-            <input id="ret-ref" required placeholder="Contoh: RET-261125ABC">
-          </div>
-          <div>
             <label for="ret-channel">Aplikasi *</label>
-            <select id="ret-channel">
+            <select id="ret-channel" required>
               <option value="Shopee">Shopee</option>
               <option value="Tokopedia">Tokopedia</option>
               <option value="Lazada">Lazada</option>
             </select>
           </div>
           <div>
-            <label for="ret-sku">SKU Barang *</label>
-            <input id="ret-sku" list="sku-datalist" required placeholder="Ketik SKU barang" autocomplete="off">
+            <label for="ret-ref">No. Pesanan / No. Retur *</label>
+            <input id="ret-ref" required placeholder="Contoh: RET-261126-01">
           </div>
           <div>
-            <label for="ret-qty">Jumlah Retur *</label>
-            <input id="ret-qty" type="number" min="1" step="1" value="1" required>
+            <label for="ret-sku">SKU Barang *</label>
+            <input id="ret-sku" list="sku-options" autocomplete="off" required placeholder="Ketik atau pilih SKU">
+          </div>
+          <div>
+            <label for="ret-qty">Jumlah Unit Retur *</label>
+            <input id="ret-qty" type="number" min="1" step="1" required placeholder="1">
           </div>
           <div>
             <label for="ret-condition">Kondisi Barang Retur *</label>
             <select id="ret-condition" required>
-              <option value="LAYAK">✅ Layak Pakai / Jual Lagi (Otomatis Restock IN)</option>
-              <option value="RUSAK">❌ Rusak / Cacat (Tidak dikembalikan ke stok jual)</option>
+              <option value="RESTOCK">✅ Layak Pakai / Jual Lagi (Kembalikan ke Stok)</option>
+              <option value="DAMAGED">❌ Rusak / Cacat (Tidak Masuk Stok Jual)</option>
             </select>
           </div>
         </div>
-        <div style="margin-top:12px">
-          <label for="ret-reason">Alasan / Catatan Kondisi Retur</label>
-          <input id="ret-reason" placeholder="Contoh: Pembeli batal / kemasan penyok tapi isi aman / produk pecah">
+        <div class="formgrid-2" style="margin-top:12px">
+          <div>
+            <label for="ret-reason">Alasan Retur</label>
+            <input id="ret-reason" placeholder="Contoh: Pembeli salah pilih varian / gagal kirim COD">
+          </div>
+          <div>
+            <label for="ret-user">Petugas Penerima Retur</label>
+            <input id="ret-user" placeholder="Nama petugas gudang">
+          </div>
+        </div>
+        <div class="notice">
+          Jika memilih <b>Layak Pakai / Jual Lagi</b>, sistem otomatis mencatat transaksi <b>IN (Retur)</b> ke StockFlow sehingga stok fisik bertambah kembali. Jika <b>Rusak / Cacat</b>, retur hanya dicatat di log retur tanpa menambah stok jual.
         </div>
         <div class="actions">
-          <button type="submit" class="btn">Proses Barang Retur</button>
+          <button type="submit" class="btn">📥 Proses Barang Retur</button>
         </div>
       </form>
     </div>
 
     <div class="panel">
-      <h2>Riwayat Barang Retur</h2>
+      <h2>📑 Riwayat Barang Retur</h2>
       <div class="tablewrap">
         <table>
           <thead>
             <tr>
               <th>Waktu</th>
-              <th>No. Retur / Pesanan</th>
-              <th>Aplikasi</th>
-              <th>Barang & Qty</th>
-              <th>Kondisi & Status Stok</th>
-              <th>Catatan</th>
+              <th>Aplikasi & No. Retur</th>
+              <th>SKU & Nama Barang</th>
+              <th>Qty</th>
+              <th>Keputusan Stok</th>
+              <th>Alasan & Petugas</th>
             </tr>
           </thead>
-          <tbody id="return-rows"></tbody>
+          <tbody id="returns-tbody"></tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- TAB 5: CEK STOK GUDANG -->
-  <section id="tab-stock" class="hidden">
+  <!-- MASTER BARANG -->
+  <section id="products" class="hidden">
+    <div class="panel">
+      <h2>➕ Tambah / Update Master Barang</h2>
+      <form id="product-form">
+        <div class="formgrid">
+          <div>
+            <label for="sku">SKU / Barcode *</label>
+            <input id="sku" required maxlength="80" placeholder="Contoh: BRG-001">
+          </div>
+          <div>
+            <label for="name">Nama Barang *</label>
+            <input id="name" required maxlength="160" placeholder="Nama produk">
+          </div>
+          <div>
+            <label for="category">Kategori</label>
+            <input id="category" maxlength="100" placeholder="Contoh: Elektronik">
+          </div>
+          <div>
+            <label for="price">Harga Jual Default (Rp)</label>
+            <input id="price" type="number" min="0" step="1" value="0" placeholder="0">
+          </div>
+          <div>
+            <label for="minimum">Batas Minimum Stok</label>
+            <input id="minimum" type="number" min="0" step="1" value="5" required>
+          </div>
+          <div>
+            <label for="opening">Stok Awal</label>
+            <input id="opening" type="number" min="0" step="1" value="0" required>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">+ Simpan Barang</button>
+        </div>
+      </form>
+    </div>
+
     <div class="panel">
       <div class="toolbar">
-        <h2 style="margin:0">Stok Real-Time dari StockFlow</h2>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <input id="search-stock" placeholder="Cari SKU / nama barang...">
-          <button type="button" class="btn secondary" id="btn-seed-demo">+ Isi Contoh Master Barang (Jika Kosong)</button>
-        </div>
+        <h2>Daftar Master Barang</h2>
+        <input id="product-search" placeholder="Cari SKU, nama, kategori...">
       </div>
       <div class="tablewrap">
         <table>
           <thead>
             <tr>
               <th>SKU</th>
-              <th>Nama Barang</th>
+              <th>Nama</th>
               <th>Kategori</th>
-              <th>Stok Fisik</th>
-              <th>Dialokasikan di Draft/Packing</th>
-              <th>Stok Bebas</th>
+              <th>Harga Default</th>
+              <th>Stok Tersedia</th>
+              <th>Minimum</th>
+              <th>Status</th>
             </tr>
           </thead>
-          <tbody id="stock-rows"></tbody>
+          <tbody id="product-rows"></tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSAKSI MANUAL IN/OUT -->
+  <section id="transaction" class="hidden">
+    <div class="panel">
+      <h2>🔄 Catat Pergerakan Barang Manual (Inbound / Outbound)</h2>
+      <form id="tx-form">
+        <div class="formgrid-2">
+          <div>
+            <label for="tx-type">Jenis Transaksi *</label>
+            <select id="tx-type">
+              <option value="IN">Barang Masuk / Inbound (IN)</option>
+              <option value="OUT">Barang Keluar / Outbound (OUT)</option>
+            </select>
+          </div>
+          <div>
+            <label for="tx-sku">SKU / Scan Barcode *</label>
+            <input id="tx-sku" list="sku-options" autocomplete="off" required placeholder="Ketik atau scan SKU">
+            <datalist id="sku-options"></datalist>
+          </div>
+          <div>
+            <label for="tx-qty">Jumlah Unit *</label>
+            <input id="tx-qty" type="number" min="1" step="1" required placeholder="0">
+          </div>
+          <div>
+            <label for="tx-ref">No. Invoice / Dokumen</label>
+            <input id="tx-ref" maxlength="100" placeholder="INV-2026-001">
+          </div>
+          <div>
+            <label for="tx-party">Supplier / Tujuan</label>
+            <input id="tx-party" maxlength="120" placeholder="Nama supplier / ekspedisi">
+          </div>
+          <div>
+            <label for="tx-user">Petugas</label>
+            <input id="tx-user" maxlength="100" placeholder="Nama petugas">
+          </div>
+        </div>
+        <div id="tx-info" class="notice">Masukkan SKU untuk melihat stok tersedia.</div>
+        <div class="actions">
+          <button class="btn" type="submit">Simpan Transaksi</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- RIWAYAT -->
+  <section id="history" class="hidden">
+    <div class="panel">
+      <div class="toolbar">
+        <h2>📜 Riwayat Transaksi Stok (Inbound, Outbound, Order & Retur)</h2>
+        <div class="actions" style="margin:0">
+          <input id="history-search" placeholder="Cari SKU / invoice / petugas">
+          <button class="btn secondary" id="export-tx">Ekspor CSV</button>
+        </div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Waktu</th>
+              <th>Jenis</th>
+              <th>SKU / Barang</th>
+              <th>Jumlah</th>
+              <th>Invoice / No. Order</th>
+              <th>Supplier / Aplikasi & Kurir</th>
+              <th>Petugas</th>
+            </tr>
+          </thead>
+          <tbody id="history-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKUP -->
+  <section id="backup" class="hidden">
+    <div class="panel">
+      <h2>💾 Backup & Pemulihan Data Terpadu</h2>
+      <p class="muted">Backup mencakup seluruh Master Barang, Riwayat Inbound/Outbound, Packing Draft Order, dan Riwayat Retur dalam satu file JSON yang kompatibel dengan StockFlow.</p>
+      <div class="actions">
+        <button class="btn" id="export-json">Unduh Backup JSON Lengkap</button>
+        <button class="btn secondary" id="export-products">Ekspor Stok CSV</button>
+        <button class="btn secondary" id="export-orders-csv">Ekspor Data Order CSV</button>
+      </div>
+      <div style="margin-top:20px">
+        <label for="restore-file">Pulihkan dari File Backup JSON</label>
+        <input type="file" id="restore-file" accept="application/json,.json">
+        <div class="hint">Pemulihan akan mengganti data saat ini. Mendukung format backup StockFlow lama maupun baru.</div>
       </div>
     </div>
   </section>
 </main>
 
-<!-- MODAL REVISI ORDER DRAFT -->
-<div id="edit-modal" class="modal-bg hidden">
+<!-- MODAL PRINT PACKING SLIP -->
+<div id="slip-modal" class="modal-backdrop hidden">
   <div class="modal">
-    <div class="modal-head">
-      <h3 style="margin:0">✏️ Revisi Order Draft</h3>
-      <button type="button" class="btn secondary sm" id="close-modal">✕ Tutup</button>
+    <div id="print-area"></div>
+    <div class="actions no-print" style="justify-content:flex-end;margin-top:16px">
+      <button type="button" class="btn secondary" id="close-modal-btn">Tutup</button>
+      <button type="button" class="btn" onclick="window.print()">🖨️ Cetak Label / Packing List</button>
     </div>
-    <form id="edit-form">
-      <input type="hidden" id="edit-id">
-      <div class="formgrid-2">
-        <div>
-          <label>No. Pesanan</label>
-          <input id="edit-no" required>
-        </div>
-        <div>
-          <label>Nama Pembeli</label>
-          <input id="edit-buyer" required>
-        </div>
-        <div>
-          <label>Aplikasi</label>
-          <select id="edit-channel">
-            <option value="Shopee">Shopee</option>
-            <option value="Tokopedia">Tokopedia</option>
-            <option value="Lazada">Lazada</option>
-          </select>
-        </div>
-        <div>
-          <label>Ekspedisi</label>
-          <select id="edit-courier">
-            <option value="Reguler">Reguler</option>
-            <option value="Sameday">Sameday</option>
-            <option value="Instan">Instan</option>
-          </select>
-        </div>
-        <div>
-          <label>Prioritas</label>
-          <label class="check-box" id="edit-kilat-wrapper" for="edit-kilat">
-            <input type="checkbox" id="edit-kilat">
-            <span>⚡ Pesanan Kilat (Shopee)</span>
-          </label>
-        </div>
-        <div>
-          <label>Catatan Packing</label>
-          <input id="edit-note">
-        </div>
-      </div>
-
-      <div class="item-builder">
-        <div style="font-weight:600;font-size:13px;margin-bottom:8px">Edit Barang & Kuantiti</div>
-        <div id="edit-items-list"></div>
-        <div style="display:grid;grid-template-columns:2fr 1fr auto;gap:8px;margin-top:12px;align-items:end">
-          <div>
-            <label>Tambah SKU Baru</label>
-            <input id="edit-add-sku" list="sku-datalist" placeholder="Ketik SKU..." autocomplete="off">
-          </div>
-          <div>
-            <label>Qty</label>
-            <input id="edit-add-qty" type="number" min="1" value="1">
-          </div>
-          <button type="button" class="btn secondary" id="btn-edit-add-item">+ Tambah</button>
-        </div>
-      </div>
-
-      <div class="actions" style="justify-content:flex-end">
-        <button type="button" class="btn secondary" id="cancel-modal">Batal</button>
-        <button type="submit" class="btn">Simpan Perubahan Draft</button>
-      </div>
-    </form>
   </div>
 </div>
 
-<!-- AREA CETAK PACKING SLIP -->
-<div id="print-area" class="hidden"></div>
 <div id="toast" role="status"></div>
 
 <script>
 (() => {
   'use strict';
 
-  // Kunci localStorage yang sama persis dengan stockflow.html
-  const SF_KEY = 'stockflow_v1';
-  const OMS_KEY = 'stockflow_oms_v1';
+  // Gunakan key penyimpanan yang sama dengan StockFlow agar langsung terhubung
+  const KEY = 'stockflow_v1';
+
+  // Database Ekspedisi Indonesia Lengkap berdasarkan Aplikasi & Jenis Layanan
+  const LOGISTICS_CONFIG = {
+    Shopee: {
+      services: [
+        { value: 'Reguler', label: 'Reguler / Hemat / Kargo' },
+        { value: 'Sameday', label: 'Sameday' },
+        { value: 'Instan', label: 'Instan' },
+        { value: 'Pesanan Kilat', label: '⚡ Pesanan Kilat (Khusus Shopee)' }
+      ],
+      couriers: {
+        'Reguler': [
+          'SPX Express (Shopee Xpress Standard)',
+          'SPX Hemat',
+          'SPX Kargo',
+          'J&T Express',
+          'J&T Economy',
+          'J&T Cargo',
+          'JNE Reguler',
+          'JNE YES',
+          'JNE JTR (Trucking/Kargo)',
+          'SiCepat REG',
+          'SiCepat HALU',
+          'SiCepat Gokil (Kargo)',
+          'Anteraja Reguler',
+          'Anteraja Economy',
+          'Anteraja Cargo',
+          'Ninja Xpress',
+          'ID Express',
+          'Pos Indonesia (Pos Reguler / Kargo)',
+          'Sentral Cargo',
+          'Indah Logistik Cargo'
+        ],
+        'Sameday': [
+          'SPX Sameday',
+          'GoSend Same Day',
+          'GrabExpress Same Day',
+          'Anteraja Same Day'
+        ],
+        'Instan': [
+          'SPX Instant',
+          'GoSend Instant (Motor / Car)',
+          'GrabExpress Instant (Bike / Car)',
+          'Lalamove Instant',
+          'Bluebird Kirim Instant'
+        ],
+        'Pesanan Kilat': [
+          'SPX Instant - Pesanan Kilat',
+          'GoSend Instant - Pesanan Kilat',
+          'GrabExpress Instant - Pesanan Kilat'
+        ]
+      }
+    },
+    Tokopedia: {
+      services: [
+        { value: 'Reguler', label: 'Reguler / Bebas Ongkir / Kargo' },
+        { value: 'Sameday', label: 'Sameday' },
+        { value: 'Instan', label: 'Instan' }
+      ],
+      couriers: {
+        'Reguler': [
+          'GoTo Logistics (GTL) / Kurir Rekomendasi',
+          'JNE Reguler',
+          'JNE YES',
+          'JNE JTR (Trucking/Kargo)',
+          'J&T Express',
+          'J&T Cargo',
+          'SiCepat REG',
+          'SiCepat BEST',
+          'SiCepat Gokil (Kargo)',
+          'Anteraja Reguler',
+          'Anteraja Next Day',
+          'Anteraja Cargo',
+          'Ninja Xpress',
+          'ID Express',
+          'Lion Parcel (Regpack / Bigpack / Jagopack)',
+          'Pos Indonesia (Pos Nextday / Reguler / Kargo)',
+          'TIKI (Reguler / ONS / TRC)',
+          'Wahana Express',
+          'REX Kiriman Express'
+        ],
+        'Sameday': [
+          'GoSend Same Day',
+          'GrabExpress Same Day',
+          'Anteraja Same Day',
+          'Paxel Same Day'
+        ],
+        'Instan': [
+          'GoSend Instant (Motor / Car)',
+          'GrabExpress Instant (Bike / Car)',
+          'Lalamove Instant'
+        ]
+      }
+    },
+    Lazada: {
+      services: [
+        { value: 'Reguler', label: 'Reguler / Ekonomi / Kargo (Hanya Reguler)' }
+      ],
+      couriers: {
+        'Reguler': [
+          'LEX (Lazada Express)',
+          'LEX Economy',
+          'LEX Cargo',
+          'JNE Reguler',
+          'JNE JTR (Kargo)',
+          'J&T Express',
+          'J&T Cargo',
+          'SiCepat REG',
+          'SiCepat Gokil',
+          'Ninja Xpress',
+          'Anteraja Reguler',
+          'ID Express',
+          'SAP Express',
+          'Pos Indonesia',
+          'Wahana Express'
+        ]
+      }
+    }
+  };
+
+  let db;
+  try {
+    const raw = localStorage.getItem(KEY);
+    db = raw ? JSON.parse(raw) : { products: [], transactions: [], orders: [], returns: [] };
+    if (!Array.isArray(db.products)) db.products = [];
+    if (!Array.isArray(db.transactions)) db.transactions = [];
+    if (!Array.isArray(db.orders)) db.orders = [];
+    if (!Array.isArray(db.returns)) db.returns = [];
+  } catch (e) {
+    alert('Data tersimpan tidak dapat dibaca. Harap pulihkan backup bila tersedia.');
+    db = { products: [], transactions: [], orders: [], returns: [] };
+  }
 
   const $ = id => document.getElementById(id);
-  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const norm = v => String(v || '').trim().toUpperCase();
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = v => String(v).trim().toUpperCase();
   const fmt = n => Number(n || 0).toLocaleString('id-ID');
-  const fmtDate = t => new Date(t).toLocaleString('id-ID', {dateStyle:'short', timeStyle:'short'});
+  const rp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+  const date = t => new Date(t).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
+  const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2));
+
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(db));
+  }
 
   function toast(msg) {
-    const el = $('toast');
-    el.textContent = msg;
-    el.style.display = 'block';
-    clearTimeout(window._t);
-    window._t = setTimeout(() => el.style.display = 'none', 3400);
+    const e = $('toast');
+    e.textContent = msg;
+    e.style.display = 'block';
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => e.style.display = 'none', 3400);
   }
 
-  // Baca & simpan ke database StockFlow utama
-  function loadSF() {
-    try {
-      const raw = localStorage.getItem(SF_KEY);
-      if (!raw) return { products: [], transactions: [] };
-      const parsed = JSON.parse(raw);
-      return {
-        products: Array.isArray(parsed.products) ? parsed.products : [],
-        transactions: Array.isArray(parsed.transactions) ? parsed.transactions : []
-      };
-    } catch (e) {
-      return { products: [], transactions: [] };
+  function stock(p) {
+    return (Number(p.opening) || 0) + db.transactions.reduce((sum, t) => sum + (t.sku === p.sku ? (t.type === 'IN' ? Number(t.qty) : -Number(t.qty)) : 0), 0);
+  }
+
+  function product(sku) {
+    return db.products.find(p => p.sku === norm(sku));
+  }
+
+  function download(name, content, mime) {
+    const blob = new Blob([content], { type: mime });
+    const u = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = u; a.download = name; document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 1000);
+  }
+
+  function csv(rows) {
+    return '\ufeff' + rows.map(row => row.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\r\n');
+  }
+
+  // --- LOGISTICS DROPDOWN LOGIC ---
+  function updateLogisticsOptions(selectedService = null, selectedCourier = null) {
+    const channel = $('ord-channel').value;
+    const cfg = LOGISTICS_CONFIG[channel] || LOGISTICS_CONFIG.Shopee;
+    const svcEl = $('ord-service-type');
+    const curEl = $('ord-courier');
+
+    svcEl.innerHTML = cfg.services.map(s => `<option value="${esc(s.value)}">${esc(s.label)}</option>`).join('');
+    if (selectedService && cfg.services.some(s => s.value === selectedService)) {
+      svcEl.value = selectedService;
     }
-  }
 
-  function saveSF(sf) {
-    localStorage.setItem(SF_KEY, JSON.stringify(sf));
-  }
-
-  // Baca & simpan database Order/Packing/Retur
-  function loadOMS() {
-    try {
-      const raw = localStorage.getItem(OMS_KEY);
-      if (!raw) return { orders: [], returns: [] };
-      const parsed = JSON.parse(raw);
-      return {
-        orders: Array.isArray(parsed.orders) ? parsed.orders : [],
-        returns: Array.isArray(parsed.returns) ? parsed.returns : []
-      };
-    } catch (e) {
-      return { orders: [], returns: [] };
+    const activeService = svcEl.value;
+    const courierList = cfg.couriers[activeService] || [];
+    curEl.innerHTML = courierList.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    if (selectedCourier && courierList.includes(selectedCourier)) {
+      curEl.value = selectedCourier;
     }
+
+    // Tampilkan badge khusus Pesanan Kilat Shopee
+    $('kilat-badge-box').classList.toggle('hidden', !(channel === 'Shopee' && activeService === 'Pesanan Kilat'));
   }
 
-  function saveOMS(oms) {
-    localStorage.setItem(OMS_KEY, JSON.stringify(oms));
-  }
+  $('ord-channel').addEventListener('change', () => updateLogisticsOptions());
+  $('ord-service-type').addEventListener('change', () => updateLogisticsOptions($('ord-service-type').value));
 
-  // Hitung stok tersedia dari rumus resmi StockFlow
-  function getStock(sf, sku) {
-    const p = sf.products.find(x => x.sku === norm(sku));
-    if (!p) return 0;
-    return p.opening + sf.transactions.reduce((sum, t) => {
-      if (t.sku !== p.sku) return sum;
-      return sum + (t.type === 'IN' ? t.qty : -t.qty);
-    }, 0);
-  }
+  // --- ORDER ITEMS & PRICING LOGIC ---
+  function createOrderItemRow(item = { sku: '', qty: 1, basePrice: 0, discount: 0 }) {
+    const tr = document.createElement('tr');
+    const optionsHtml = `<option value="">-- Pilih Barang --</option>` + db.products.map(p =>
+      `<option value="${esc(p.sku)}" ${p.sku === item.sku ? 'selected' : ''}>${esc(p.sku)} - ${esc(p.name)}</option>`
+    ).join('');
 
-  // Hitung stok yang sedang ter-booking di order Draft / Packing
-  function getReservedStock(oms, sku) {
-    const s = norm(sku);
-    return oms.orders
-      .filter(o => o.status === 'DRAFT' || o.status === 'PACKING')
-      .reduce((sum, o) => {
-        const found = o.items.find(i => i.sku === s);
-        return sum + (found ? found.qty : 0);
-      }, 0);
-  }
+    tr.innerHTML = `
+      <td><select class="item-sku" required>${optionsHtml}</select></td>
+      <td class="item-stock muted">-</td>
+      <td><input type="number" class="item-qty" min="1" step="1" value="${item.qty || 1}" required></td>
+      <td><input type="number" class="item-base" min="0" step="1" value="${item.basePrice || 0}" required></td>
+      <td><input type="number" class="item-disc" min="0" step="1" value="${item.discount || 0}" required></td>
+      <td class="item-final" style="font-weight:700;color:#a1f0ce">Rp 0</td>
+      <td><button type="button" class="btn danger sm remove-item-btn" title="Hapus baris">✕</button></td>
+    `;
 
-  // State sementara untuk form buat order & modal revisi
-  let currentDraftItems = [];
-  let editingItems = [];
+    const skuSel = tr.querySelector('.item-sku');
+    const qtyIn = tr.querySelector('.item-qty');
+    const baseIn = tr.querySelector('.item-base');
+    const discIn = tr.querySelector('.item-disc');
 
-  // Aturan Ekspedisi & Pesanan Kilat berdasarkan Marketplace
-  function syncChannelRules(channelSelId, courierSelId, kilatCheckId, kilatWrapId) {
-    const channel = $(channelSelId).value;
-    const courierSel = $(courierSelId);
-    const kilatCheck = $(kilatCheckId);
-    const kilatWrap = $(kilatWrapId);
-
-    // Instan & Sameday hanya untuk Shopee dan Tokopedia
-    const allowExpress = (channel === 'Shopee' || channel === 'Tokopedia');
-    Array.from(courierSel.options).forEach(opt => {
-      if (opt.value === 'Instan' || opt.value === 'Sameday') {
-        opt.disabled = !allowExpress;
-        opt.hidden = !allowExpress;
+    function syncRow(autoFillPrice = false) {
+      const p = product(skuSel.value);
+      const stockCell = tr.querySelector('.item-stock');
+      if (p) {
+        const s = stock(p);
+        stockCell.innerHTML = `<span class="tag ${s <= 0 ? 'out' : s <= p.minimum ? 'low' : 'good'}">${fmt(s)}</span>`;
+        if (autoFillPrice && Number(baseIn.value) === 0 && p.price) {
+          baseIn.value = p.price;
+        }
+      } else {
+        stockCell.textContent = '-';
       }
+      const q = Math.max(0, Number(qtyIn.value) || 0);
+      const b = Math.max(0, Number(baseIn.value) || 0);
+      const d = Math.max(0, Number(discIn.value) || 0);
+      const finalTotal = Math.max(0, (b * q) - d);
+      tr.querySelector('.item-final').textContent = rp(finalTotal);
+      recalcOrderTotals();
+    }
+
+    skuSel.addEventListener('change', () => syncRow(true));
+    [qtyIn, baseIn, discIn].forEach(el => el.addEventListener('input', () => syncRow(false)));
+    tr.querySelector('.remove-item-btn').addEventListener('click', () => {
+      if ($('order-items-tbody').children.length <= 1) {
+        return toast('Minimal harus ada 1 baris barang dalam pesanan.');
+      }
+      tr.remove();
+      recalcOrderTotals();
     });
-    if (!allowExpress && (courierSel.value === 'Instan' || courierSel.value === 'Sameday')) {
-      courierSel.value = 'Reguler';
-    }
 
-    // Pesanan Kilat hanya berlaku untuk Shopee
-    const allowKilat = (channel === 'Shopee');
-    kilatCheck.disabled = !allowKilat;
-    if (!allowKilat) kilatCheck.checked = false;
-    kilatWrap.classList.toggle('disabled', !allowKilat);
+    $('order-items-tbody').appendChild(tr);
+    syncRow(false);
   }
 
-  $('ord-channel').addEventListener('change', () => syncChannelRules('ord-channel', 'ord-courier', 'ord-kilat', 'kilat-wrapper'));
-  $('edit-channel').addEventListener('change', () => syncChannelRules('edit-channel', 'edit-courier', 'edit-kilat', 'edit-kilat-wrapper'));
+  function recalcOrderTotals() {
+    let gross = 0;
+    let itemDisc = 0;
+    $('order-items-tbody').querySelectorAll('tr').forEach(tr => {
+      const q = Math.max(0, Number(tr.querySelector('.item-qty').value) || 0);
+      const b = Math.max(0, Number(tr.querySelector('.item-base').value) || 0);
+      const d = Math.max(0, Number(tr.querySelector('.item-disc').value) || 0);
+      gross += (b * q);
+      itemDisc += d;
+    });
+    const extraDisc = Math.max(0, Number($('ord-extra-discount').value) || 0);
+    const totalDisc = itemDisc + extraDisc;
+    const net = Math.max(0, gross - totalDisc);
 
-  // Render daftar item pada Form Buat Order
-  function renderDraftBuilder() {
-    const sf = loadSF();
-    const list = $('draft-items-list');
-    if (!currentDraftItems.length) {
-      list.innerHTML = '<div class="muted">Belum ada barang ditambahkan ke draft ini.</div>';
-      return;
-    }
-    list.innerHTML = currentDraftItems.map((item, idx) => {
-      const p = sf.products.find(x => x.sku === item.sku);
-      const stok = p ? getStock(sf, item.sku) : 0;
-      const warn = item.qty > stok ? `<span class="tag out">Stok kurang (Sisa ${stok})</span>` : `<span class="tag good">Stok: ${stok}</span>`;
-      return `
-        <div class="item-row">
-          <div>
-            <b>${esc(item.sku)}</b> — ${esc(item.name)} ${warn}
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="number" min="1" value="${item.qty}" style="width:78px;padding:6px 8px" onchange="window._updateNewQty(${idx}, this.value)">
-            <button type="button" class="btn danger sm" onclick="window._removeNewItem(${idx})">Hapus</button>
-          </div>
-        </div>
-      `;
-    }).join('');
+    $('sum-gross').textContent = rp(gross);
+    $('sum-disc').textContent = '- ' + rp(totalDisc);
+    $('sum-net').textContent = rp(net);
   }
 
-  window._updateNewQty = (idx, val) => {
-    const q = parseInt(val, 10);
-    if (q > 0) currentDraftItems[idx].qty = q;
-    renderDraftBuilder();
-  };
-  window._removeNewItem = idx => {
-    currentDraftItems.splice(idx, 1);
-    renderDraftBuilder();
-  };
+  $('ord-extra-discount').addEventListener('input', recalcOrderTotals);
+  $('add-order-item-btn').addEventListener('click', () => createOrderItemRow());
 
-  $('pick-sku').addEventListener('input', () => {
-    const sf = loadSF();
-    const oms = loadOMS();
-    const p = sf.products.find(x => x.sku === norm($('pick-sku').value));
-    if (p) {
-      const fisik = getStock(sf, p.sku);
-      const booked = getReservedStock(oms, p.sku);
-      $('pick-stock-hint').innerHTML = `✅ <b>${esc(p.name)}</b> | Stok fisik: <b>${fmt(fisik)}</b> | Ter-booking draft: <b>${fmt(booked)}</b> | Bebas: <b>${fmt(fisik - booked)}</b>`;
-    } else {
-      $('pick-stock-hint').textContent = 'Pilih SKU yang terdaftar di StockFlow.';
-    }
-  });
-
-  $('btn-add-item').addEventListener('click', () => {
-    const sf = loadSF();
-    const sku = norm($('pick-sku').value);
-    const qty = parseInt($('pick-qty').value, 10);
-    const p = sf.products.find(x => x.sku === sku);
-    if (!p) return toast('SKU tidak ditemukan di master StockFlow!');
-    if (!Number.isInteger(qty) || qty <= 0) return toast('Kuantiti harus minimal 1.');
-
-    const existing = currentDraftItems.find(i => i.sku === sku);
-    if (existing) {
-      existing.qty += qty;
-    } else {
-      currentDraftItems.push({ sku: p.sku, name: p.name, qty });
-    }
-    $('pick-sku').value = '';
-    $('pick-qty').value = 1;
-    $('pick-stock-hint').textContent = 'Item ditambahkan.';
-    renderDraftBuilder();
-  });
-
-  $('btn-reset-form').addEventListener('click', () => {
+  function resetOrderForm() {
     $('order-form').reset();
-    currentDraftItems = [];
-    syncChannelRules('ord-channel', 'ord-courier', 'ord-kilat', 'kilat-wrapper');
-    renderDraftBuilder();
-  });
+    $('edit-order-id').value = '';
+    $('order-form-title').textContent = '➕ Buat Order & Packing Draft Baru';
+    $('save-draft-btn').textContent = '💾 Simpan sebagai Packing Draft';
+    $('cancel-edit-btn').classList.add('hidden');
+    $('ord-extra-discount').value = 0;
+    $('order-items-tbody').innerHTML = '';
+    updateLogisticsOptions();
+    createOrderItemRow();
+    recalcOrderTotals();
+  }
 
-  // Simpan Order Draft Baru
+  $('cancel-edit-btn').addEventListener('click', resetOrderForm);
+
+  // Simpan / Update Packing Draft
   $('order-form').addEventListener('submit', e => {
     e.preventDefault();
-    if (!currentDraftItems.length) return toast('Tambahkan minimal 1 barang ke order draft.');
+    if (db.products.length === 0) {
+      return toast('Master Barang masih kosong! Tambahkan barang dulu di tab Master Barang.');
+    }
 
-    const channel = $('ord-channel').value;
-    const courier = $('ord-courier').value;
-    const isKilat = (channel === 'Shopee') && $('ord-kilat').checked;
+    const items = [];
+    let valid = true;
+    $('order-items-tbody').querySelectorAll('tr').forEach(tr => {
+      const sku = norm(tr.querySelector('.item-sku').value);
+      const qty = Number(tr.querySelector('.item-qty').value);
+      const basePrice = Math.max(0, Number(tr.querySelector('.item-base').value) || 0);
+      const discount = Math.max(0, Number(tr.querySelector('.item-disc').value) || 0);
+      const p = product(sku);
+      if (!p || !Number.isSafeInteger(qty) || qty <= 0) {
+        valid = false;
+        return;
+      }
+      const finalPrice = Math.max(0, (basePrice * qty) - discount);
+      items.push({ sku: p.sku, name: p.name, qty, basePrice, discount, finalPrice });
+    });
 
-    const oms = loadOMS();
-    const newOrder = {
-      id: 'ORD-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase(),
-      orderNo: $('ord-no').value.trim(),
+    if (!valid || items.length === 0) {
+      return toast('Pastikan semua baris barang memiliki SKU valid dan Qty minimal 1.');
+    }
+
+    const grossTotal = items.reduce((s, it) => s + (it.basePrice * it.qty), 0);
+    const itemDiscountTotal = items.reduce((s, it) => s + it.discount, 0);
+    const extraDiscount = Math.max(0, Number($('ord-extra-discount').value) || 0);
+    const totalDiscount = itemDiscountTotal + extraDiscount;
+    const netTotal = Math.max(0, grossTotal - totalDiscount);
+
+    const editId = $('edit-order-id').value;
+    const orderPayload = {
+      channel: $('ord-channel').value,
+      orderNumber: $('ord-number').value.trim(),
       buyer: $('ord-buyer').value.trim(),
-      channel,
-      courier,
-      isKilat,
+      serviceType: $('ord-service-type').value,
+      courier: $('ord-courier').value,
+      packer: $('ord-packer').value.trim(),
       note: $('ord-note').value.trim(),
-      items: JSON.parse(JSON.stringify(currentDraftItems)),
-      status: 'DRAFT', // DRAFT -> PACKING -> SHIPPED
-      createdAt: new Date().toISOString(),
-      shippedAt: null
+      items,
+      grossTotal,
+      extraDiscount,
+      totalDiscount,
+      netTotal
     };
 
-    oms.orders.unshift(newOrder);
-    saveOMS(oms);
-    $('order-form').reset();
-    currentDraftItems = [];
-    syncChannelRules('ord-channel', 'ord-courier', 'ord-kilat', 'kilat-wrapper');
-    renderDraftBuilder();
-    renderAll();
-    toast(`Order draft ${newOrder.orderNo} berhasil dibuat!`);
+    if (editId) {
+      const idx = db.orders.findIndex(o => o.id === editId);
+      if (idx === -1) return toast('Draft tidak ditemukan.');
+      if (db.orders[idx].status !== 'DRAFT') {
+        return toast('Hanya pesanan berstatus DRAFT yang bisa direvisi langsung.');
+      }
+      db.orders[idx] = { ...db.orders[idx], ...orderPayload, updatedAt: new Date().toISOString() };
+      save();
+      toast('Revisi Packing Draft berhasil disimpan!');
+    } else {
+      db.orders.push({
+        id: uid(),
+        createdAt: new Date().toISOString(),
+        status: 'DRAFT',
+        ...orderPayload
+      });
+      save();
+      toast('Order & Packing Draft berhasil dibuat!');
+    }
+
+    resetOrderForm();
+    render();
   });
 
-  // Ubah Status Draft -> Packing
-  window._setPacking = id => {
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === id);
+  // Aksi pada tabel Order (Edit/Revisi, Konfirmasi Packing -> Potong Stok, Cetak Slip, Hapus)
+  window.editOrderDraft = function(id) {
+    const ord = db.orders.find(o => o.id === id);
     if (!ord) return;
-    ord.status = 'PACKING';
-    saveOMS(oms);
-    renderAll();
-    toast(`Order ${ord.orderNo} masuk tahap Packing.`);
+    if (ord.status !== 'DRAFT') return toast('Pesanan yang sudah dipacking tidak dapat direvisi.');
+
+    $('edit-order-id').value = ord.id;
+    $('order-form-title').textContent = `✏️ Revisi Packing Draft: ${ord.orderNumber}`;
+    $('save-draft-btn').textContent = '✅ Simpan Perubahan Revisi';
+    $('cancel-edit-btn').classList.remove('hidden');
+
+    $('ord-channel').value = ord.channel;
+    updateLogisticsOptions(ord.serviceType, ord.courier);
+    $('ord-number').value = ord.orderNumber;
+    $('ord-buyer').value = ord.buyer;
+    $('ord-packer').value = ord.packer || '';
+    $('ord-note').value = ord.note || '';
+    $('ord-extra-discount').value = ord.extraDiscount || 0;
+
+    $('order-items-tbody').innerHTML = '';
+    ord.items.forEach(it => createOrderItemRow(it));
+    recalcOrderTotals();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    toast('Mode revisi aktif. Silakan ubah barang, qty, atau harga.');
   };
 
-  // Cetak Packing Slip
-  window._printSlip = id => {
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === id);
-    if (!ord) return;
-    const area = $('print-area');
-    area.innerHTML = `
-      <div style="border:2px solid #000;padding:16px;max-width:600px">
-        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #000;padding-bottom:8px">
-          <div>
-            <div style="font-size:20px;font-weight:800">${esc(ord.channel.toUpperCase())} — ${esc(ord.courier.toUpperCase())}</div>
-            ${ord.isKilat ? '<div style="font-weight:800;margin-top:4px">⚡ PESANAN KILAT (PRIORITAS)</div>' : ''}
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:12px">No. Pesanan</div>
-            <div style="font-size:16px;font-weight:700">${esc(ord.orderNo)}</div>
-          </div>
-        </div>
-        <div style="margin-top:10px;font-size:14px">
-          <b>Penerima:</b> ${esc(ord.buyer)}<br>
-          <b>Catatan Packing:</b> ${esc(ord.note || '-')}
-        </div>
-        <table>
-          <thead><tr><th>SKU</th><th>Nama Barang</th><th style="width:70px;text-align:center">Qty</th><th style="width:60px;text-align:center">Cek</th></tr></thead>
-          <tbody>
-            ${ord.items.map(i => `<tr><td><b>${esc(i.sku)}</b></td><td>${esc(i.name)}</td><td style="text-align:center;font-weight:700">${i.qty}</td><td></td></tr>`).join('')}
-          </tbody>
-        </table>
-        <div style="margin-top:12px;font-size:11px">Dicetak dari StockFlow OMS • ${new Date().toLocaleString('id-ID')}</div>
-      </div>
-    `;
-    area.classList.remove('hidden');
-    window.print();
-    area.classList.add('hidden');
-  };
+  window.confirmPackOrder = function(id) {
+    const ord = db.orders.find(o => o.id === id);
+    if (!ord || ord.status !== 'DRAFT') return;
 
-  // Kirim Barang -> Catat Transaksi OUT ke StockFlow
-  window._shipOrder = id => {
-    const oms = loadOMS();
-    const sf = loadSF();
-    const ord = oms.orders.find(o => o.id === id);
-    if (!ord) return;
+    // Agregasi kebutuhan stok per SKU
+    const needed = {};
+    for (const it of ord.items) {
+      needed[it.sku] = (needed[it.sku] || 0) + it.qty;
+    }
 
-    // Validasi stok di StockFlow sebelum memotong
-    for (const item of ord.items) {
-      const p = sf.products.find(x => x.sku === item.sku);
-      if (!p) return toast(`Gagal: SKU ${item.sku} tidak ditemukan di master StockFlow.`);
-      const avail = getStock(sf, item.sku);
-      if (item.qty > avail) {
-        return toast(`Stok ${item.sku} tidak cukup! Tersedia ${avail}, butuh ${item.qty}. Silakan revisi draft.`);
+    // Validasi stok di Master Barang
+    for (const [sku, reqQty] of Object.entries(needed)) {
+      const p = product(sku);
+      if (!p) return toast(`SKU ${sku} tidak ditemukan di Master Barang!`);
+      const avail = stock(p);
+      if (reqQty > avail) {
+        return toast(`Stok ${p.name} (${sku}) tidak cukup! Butuh ${reqQty}, tersedia ${avail}.`);
       }
     }
 
-    if (!confirm(`Konfirmasi kirim pesanan ${ord.orderNo}? Stok gudang di StockFlow akan otomatis berkurang (OUT).`)) return;
+    if (!confirm(`Konfirmasi selesai packing untuk pesanan ${ord.orderNumber} (${ord.channel})?\nStok barang akan otomatis terpotong di StockFlow.`)) {
+      return;
+    }
 
+    // Catat transaksi OUT ke StockFlow
     const now = new Date().toISOString();
-    const partyLabel = `${ord.channel} - ${ord.courier}${ord.isKilat ? ' (Kilat)' : ''} | ${ord.buyer}`;
-
-    // Buat transaksi OUT untuk setiap item di StockFlow
-    for (const item of ord.items) {
-      sf.transactions.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+    for (const it of ord.items) {
+      db.transactions.push({
+        id: uid(),
         time: now,
         type: 'OUT',
-        sku: item.sku,
-        name: item.name,
-        qty: item.qty,
-        ref: ord.orderNo,
-        party: partyLabel,
-        user: 'Packing OMS'
+        sku: it.sku,
+        name: it.name,
+        qty: it.qty,
+        ref: ord.orderNumber,
+        party: `${ord.channel} - ${ord.courier} (${ord.serviceType})`,
+        user: ord.packer || 'Admin Order'
       });
     }
 
-    ord.status = 'SHIPPED';
-    ord.shippedAt = now;
-
-    saveSF(sf);
-    saveOMS(oms);
-    renderAll();
-    toast(`Pesanan ${ord.orderNo} terkirim! Stok StockFlow telah dipotong.`);
+    ord.status = 'PACKED';
+    ord.packedAt = now;
+    save();
+    render();
+    toast('Packing selesai! Stok gudang otomatis terpotong.');
   };
 
-  // Hapus Draft
-  window._deleteDraft = id => {
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === id);
-    if (!ord) return;
-    if (!confirm(`Hapus draft pesanan ${ord.orderNo}?`)) return;
-    oms.orders = oms.orders.filter(o => o.id !== id);
-    saveOMS(oms);
-    renderAll();
-    toast('Draft dihapus.');
-  };
-
-  // Buka Modal Revisi Draft
-  window._openEditModal = id => {
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === id);
-    if (!ord) return;
-
-    $('edit-id').value = ord.id;
-    $('edit-no').value = ord.orderNo;
-    $('edit-buyer').value = ord.buyer;
-    $('edit-channel').value = ord.channel;
-    syncChannelRules('edit-channel', 'edit-courier', 'edit-kilat', 'edit-kilat-wrapper');
-    $('edit-courier').value = ord.courier;
-    $('edit-kilat').checked = !!ord.isKilat;
-    $('edit-note').value = ord.note || '';
-
-    editingItems = JSON.parse(JSON.stringify(ord.items));
-    renderEditItems();
-    $('edit-modal').classList.remove('hidden');
-  };
-
-  function renderEditItems() {
-    const sf = loadSF();
-    const box = $('edit-items-list');
-    if (!editingItems.length) {
-      box.innerHTML = '<div class="muted">Minimal harus ada 1 barang dalam order.</div>';
-      return;
+  window.deleteOrderDraft = function(id) {
+    const idx = db.orders.findIndex(o => o.id === id);
+    if (idx === -1) return;
+    if (db.orders[idx].status === 'PACKED') {
+      return toast('Order yang sudah dipacking tidak bisa dihapus (gunakan fitur Retur jika batal).');
     }
-    box.innerHTML = editingItems.map((item, idx) => {
-      const stok = getStock(sf, item.sku);
-      return `
-        <div class="item-row">
-          <div><b>${esc(item.sku)}</b> — ${esc(item.name)} <span class="muted">(Stok: ${stok})</span></div>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" min="1" value="${item.qty}" style="width:75px;padding:6px" onchange="window._updateEditQty(${idx}, this.value)">
-            <button type="button" class="btn danger sm" onclick="window._removeEditItem(${idx})">Hapus</button>
+    if (!confirm('Hapus draft pesanan ini?')) return;
+    db.orders.splice(idx, 1);
+    save();
+    render();
+    toast('Draft pesanan dihapus.');
+  };
+
+  window.openPackingSlip = function(id) {
+    const ord = db.orders.find(o => o.id === id);
+    if (!ord) return;
+
+    const rowsHtml = ord.items.map((it, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td><b>${esc(it.sku)}</b></td>
+        <td>${esc(it.name)}</td>
+        <td style="text-align:center"><b>${fmt(it.qty)}</b></td>
+        <td style="text-align:right">${rp(it.basePrice)}</td>
+        <td style="text-align:right">${rp(it.discount)}</td>
+        <td style="text-align:right"><b>${rp(it.finalPrice)}</b></td>
+      </tr>
+    `).join('');
+
+    $('print-area').innerHTML = `
+      <div class="packing-slip">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:12px">
+          <div>
+            <h2 style="margin:0;font-size:20px">PACKING LIST & INVOICE</h2>
+            <div>Marketplace: <b>${esc(ord.channel.toUpperCase())}</b> ${ord.serviceType === 'Pesanan Kilat' ? '<b>[⚡ PESANAN KILAT]</b>' : ''}</div>
+          </div>
+          <div style="text-align:right">
+            <div>No. Pesanan: <b>${esc(ord.orderNumber)}</b></div>
+            <div>Status: <b>${ord.status === 'PACKED' ? 'SIAP KIRIM (PACKED)' : 'DRAFT PACKING'}</b></div>
           </div>
         </div>
-      `;
-    }).join('');
-  }
-
-  window._updateEditQty = (idx, val) => {
-    const q = parseInt(val, 10);
-    if (q > 0) editingItems[idx].qty = q;
-    renderEditItems();
+        <div style="display:flex;justify-content:space-between;gap:16px;margin-bottom:12px;font-size:13px">
+          <div>
+            <b>Penerima:</b> ${esc(ord.buyer)}<br>
+            <b>Catatan:</b> ${esc(ord.note || '-')}
+          </div>
+          <div style="text-align:right">
+            <b>Layanan:</b> ${esc(ord.serviceType)}<br>
+            <b>Ekspedisi:</b> ${esc(ord.courier)}<br>
+            <b>Packer:</b> ${esc(ord.packer || '-')}
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>SKU</th>
+              <th>Nama Barang</th>
+              <th>Qty</th>
+              <th>Harga Awal</th>
+              <th>Diskon</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+        <div style="text-align:right;font-size:13px;line-height:1.6">
+          <div>Total Harga Awal: <b>${rp(ord.grossTotal)}</b></div>
+          <div>Total Diskon & Voucher: <b>- ${rp(ord.totalDiscount)}</b></div>
+          <div style="font-size:16px;border-top:1px dashed #000;padding-top:4px;margin-top:4px">
+            TOTAL HARGA AKHIR: <b>${rp(ord.netTotal)}</b>
+          </div>
+        </div>
+      </div>
+    `;
+    $('slip-modal').classList.remove('hidden');
   };
-  window._removeEditItem = idx => {
-    editingItems.splice(idx, 1);
-    renderEditItems();
-  };
 
-  $('btn-edit-add-item').addEventListener('click', () => {
-    const sf = loadSF();
-    const sku = norm($('edit-add-sku').value);
-    const qty = parseInt($('edit-add-qty').value, 10);
-    const p = sf.products.find(x => x.sku === sku);
-    if (!p) return toast('SKU tidak ditemukan di StockFlow.');
-    if (!Number.isInteger(qty) || qty <= 0) return toast('Qty minimal 1.');
+  $('close-modal-btn').addEventListener('click', () => $('slip-modal').classList.add('hidden'));
 
-    const ex = editingItems.find(i => i.sku === sku);
-    if (ex) ex.qty += qty;
-    else editingItems.push({ sku: p.sku, name: p.name, qty });
-
-    $('edit-add-sku').value = '';
-    $('edit-add-qty').value = 1;
-    renderEditItems();
-  });
-
-  $('edit-form').addEventListener('submit', e => {
-    e.preventDefault();
-    if (!editingItems.length) return toast('Minimal harus ada 1 barang dalam order.');
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === $('edit-id').value);
+  // --- RETUR BARANG LOGIC ---
+  $('ret-order-select').addEventListener('change', e => {
+    const ord = db.orders.find(o => o.id === e.target.value);
     if (!ord) return;
-
-    ord.orderNo = $('edit-no').value.trim();
-    ord.buyer = $('edit-buyer').value.trim();
-    ord.channel = $('edit-channel').value;
-    ord.courier = $('edit-courier').value;
-    ord.isKilat = (ord.channel === 'Shopee') && $('edit-kilat').checked;
-    ord.note = $('edit-note').value.trim();
-    ord.items = JSON.parse(JSON.stringify(editingItems));
-
-    saveOMS(oms);
-    $('edit-modal').classList.add('hidden');
-    renderAll();
-    toast(`Revisi order ${ord.orderNo} berhasil disimpan!`);
-  });
-
-  ['close-modal', 'cancel-modal'].forEach(id => $(id).addEventListener('click', () => $('edit-modal').classList.add('hidden')));
-
-  // Fitur Retur Barang
-  $('ret-order').addEventListener('change', () => {
-    const oms = loadOMS();
-    const ord = oms.orders.find(o => o.id === $('ret-order').value);
-    if (!ord) return;
-    $('ret-ref').value = 'RET-' + ord.orderNo;
     $('ret-channel').value = ord.channel;
-    if (ord.items.length) {
+    $('ret-ref').value = ord.orderNumber;
+    if (ord.items.length > 0) {
       $('ret-sku').value = ord.items[0].sku;
       $('ret-qty').value = ord.items[0].qty;
     }
@@ -858,236 +1058,333 @@ td{color:#e5ecf8}
 
   $('return-form').addEventListener('submit', e => {
     e.preventDefault();
-    const sf = loadSF();
-    const oms = loadOMS();
+    const p = product($('ret-sku').value);
+    if (!p) return toast('SKU barang tidak ditemukan di Master Barang.');
 
-    const ref = $('ret-ref').value.trim();
+    const qty = Number($('ret-qty').value);
+    if (!Number.isSafeInteger(qty) || qty <= 0) return toast('Jumlah retur harus bilangan bulat positif.');
+
     const channel = $('ret-channel').value;
-    const sku = norm($('ret-sku').value);
-    const qty = parseInt($('ret-qty').value, 10);
-    const condition = $('ret-condition').value; // LAYAK | RUSAK
+    const ref = $('ret-ref').value.trim();
+    const condition = $('ret-condition').value; // RESTOCK or DAMAGED
     const reason = $('ret-reason').value.trim();
-
-    const p = sf.products.find(x => x.sku === sku);
-    if (!p) return toast('SKU barang tidak ditemukan di master StockFlow!');
-    if (!Number.isInteger(qty) || qty <= 0) return toast('Jumlah retur minimal 1.');
-
+    const user = $('ret-user').value.trim();
     const now = new Date().toISOString();
-    let restocked = false;
 
-    if (condition === 'LAYAK') {
-      // Kembalikan stok ke StockFlow sebagai transaksi IN
-      sf.transactions.push({
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(),
+    db.returns.push({
+      id: uid(),
+      time: now,
+      channel,
+      ref,
+      sku: p.sku,
+      name: p.name,
+      qty,
+      condition,
+      reason,
+      user
+    });
+
+    if (condition === 'RESTOCK') {
+      db.transactions.push({
+        id: uid(),
         time: now,
         type: 'IN',
         sku: p.sku,
         name: p.name,
         qty,
-        ref: ref,
-        party: `Retur Layak (${channel})`,
-        user: 'Retur OMS'
+        ref: `RETUR-${ref}`,
+        party: `Retur ${channel} (${reason || 'Layak Jual'})`,
+        user: user || 'Admin Retur'
       });
-      saveSF(sf);
-      restocked = true;
     }
 
-    oms.returns.unshift({
-      id: 'RET-' + Date.now(),
-      time: now,
-      ref,
-      channel,
-      sku: p.sku,
-      name: p.name,
-      qty,
-      condition,
-      restocked,
-      reason
-    });
-    saveOMS(oms);
+    // Tandai order terkait jika dipilih
+    const linkedOrdId = $('ret-order-select').value;
+    if (linkedOrdId) {
+      const ord = db.orders.find(o => o.id === linkedOrdId);
+      if (ord) ord.status = 'RETURNED';
+    }
 
-    $('return-form').reset();
-    renderAll();
-    toast(restocked
-      ? `Retur dicatat & +${qty} unit ${p.sku} dikembalikan ke stok StockFlow!`
+    save();
+    e.target.reset();
+    render();
+    toast(condition === 'RESTOCK'
+      ? `Retur diproses! +${qty} unit ${p.sku} dikembalikan ke stok gudang.`
       : `Retur barang rusak dicatat (stok jual tidak ditambah).`
     );
   });
 
-  // Tombol isi contoh data master barang jika StockFlow masih kosong
-  $('btn-seed-demo').addEventListener('click', () => {
-    const sf = loadSF();
-    if (sf.products.length > 0 && !confirm('StockFlow sudah memiliki data barang. Tambahkan 3 contoh SKU demo?')) return;
-    const demos = [
-      { sku: 'PRD-001', name: 'Kemeja Linen Pria Putih - L', category: 'Fashion', minimum: 5, opening: 30 },
-      { sku: 'PRD-002', name: 'TWS Bluetooth Earphone Pro', category: 'Elektronik', minimum: 10, opening: 50 },
-      { sku: 'PRD-003', name: 'Botol Minum Tumbler 750ml', category: 'Aksesoris', minimum: 8, opening: 25 }
-    ];
-    let added = 0;
-    demos.forEach(d => {
-      if (!sf.products.some(p => p.sku === d.sku)) {
-        sf.products.push(d);
-        added++;
-      }
-    });
-    saveSF(sf);
-    renderAll();
-    toast(added ? `${added} contoh barang ditambahkan ke StockFlow!` : 'Semua SKU demo sudah ada.');
+  // --- MASTER BARANG & TRANSAKSI MANUAL ---
+  $('product-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const sku = norm($('sku').value);
+    const name = $('name').value.trim();
+    const category = $('category').value.trim();
+    const price = Math.max(0, Number($('price').value) || 0);
+    const minimum = Number($('minimum').value);
+    const opening = Number($('opening').value);
+
+    if (!sku || !name || !Number.isSafeInteger(minimum) || minimum < 0 || !Number.isSafeInteger(opening) || opening < 0) {
+      return toast('Periksa kembali data barang.');
+    }
+
+    const existing = product(sku);
+    if (existing) {
+      existing.name = name;
+      existing.category = category;
+      existing.price = price;
+      existing.minimum = minimum;
+      save();
+      toast('Data master barang yang sudah ada berhasil diperbarui.');
+    } else {
+      db.products.push({ sku, name, category, price, minimum, opening });
+      save();
+      toast('Barang baru berhasil ditambahkan ke Master Barang.');
+    }
+
+    e.target.reset();
+    $('minimum').value = 5;
+    $('opening').value = 0;
+    $('price').value = 0;
+    render();
   });
 
-  // Render Keseluruhan UI
-  function renderAll() {
-    const sf = loadSF();
-    const oms = loadOMS();
+  $('tx-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const p = product($('tx-sku').value);
+    const qty = Number($('tx-qty').value);
+    const type = $('tx-type').value;
 
-    // Update status koneksi StockFlow
-    $('sync-status').textContent = `● Terhubung StockFlow (${sf.products.length} SKU)`;
+    if (!p) return toast('SKU tidak ditemukan di master barang.');
+    if (!Number.isSafeInteger(qty) || qty <= 0) return toast('Jumlah harus bilangan bulat positif.');
+    if (type === 'OUT' && qty > stock(p)) return toast(`Stok tidak cukup! Tersedia ${fmt(stock(p))} unit.`);
 
-    // Update datalist SKU
-    $('sku-datalist').innerHTML = sf.products.map(p =>
-      `<option value="${esc(p.sku)}">${esc(p.name)} (Stok: ${getStock(sf, p.sku)})</option>`
-    ).join('');
+    db.transactions.push({
+      id: uid(),
+      time: new Date().toISOString(),
+      type,
+      sku: p.sku,
+      name: p.name,
+      qty,
+      ref: $('tx-ref').value.trim(),
+      party: $('tx-party').value.trim(),
+      user: $('tx-user').value.trim()
+    });
+    save();
+    e.target.reset();
+    render();
+    toast('Transaksi stok berhasil dicatat.');
+  });
 
-    // Update Summary Stats
-    const drafts = oms.orders.filter(o => o.status === 'DRAFT');
-    const packings = oms.orders.filter(o => o.status === 'PACKING');
-    const activeOrders = oms.orders.filter(o => o.status === 'DRAFT' || o.status === 'PACKING');
-    const kilatCount = activeOrders.filter(o => o.isKilat).length;
-
-    $('st-draft').textContent = fmt(drafts.length);
-    $('st-packing').textContent = fmt(packings.length);
-    $('st-kilat').textContent = fmt(kilatCount);
-    $('st-retur').textContent = fmt(oms.returns.length);
-    $('badge-draft').textContent = activeOrders.length;
-
-    // Filter Antrean Draft & Packing (Prioritaskan Pesanan Kilat & Instan di atas)
-    const fChan = $('filter-channel').value;
-    const fCour = $('filter-courier').value;
-    const qDraft = $('search-draft').value.toLowerCase();
-
-    const priorityScore = o => (o.isKilat ? 100 : 0) + (o.courier === 'Instan' ? 50 : o.courier === 'Sameday' ? 25 : 0);
-    const filteredActive = activeOrders
-      .filter(o => (!fChan || o.channel === fChan) && (!fCour || o.courier === fCour))
-      .filter(o => [o.orderNo, o.buyer, o.note, ...o.items.map(i => i.sku + ' ' + i.name)].join(' ').toLowerCase().includes(qDraft))
-      .sort((a, b) => priorityScore(b) - priorityScore(a) || a.createdAt.localeCompare(b.createdAt));
-
-    $('draft-rows').innerHTML = filteredActive.length ? filteredActive.map(o => {
-      const chClass = o.channel.toLowerCase();
-      const crClass = o.courier.toLowerCase();
-      const itemsHtml = o.items.map(i => {
-        const avail = getStock(sf, i.sku);
-        const low = i.qty > avail ? ` <span class="tag out">Kurang (Stok ${avail})</span>` : '';
-        return `<div>• <b>${esc(i.sku)}</b> (${esc(i.name)}) × <b>${i.qty}</b>${low}</div>`;
-      }).join('');
-
-      return `
-        <tr>
-          <td><b>${esc(o.orderNo)}</b><div class="muted">${fmtDate(o.createdAt)}</div></td>
-          <td>
-            <span class="tag ${chClass}">${esc(o.channel)}</span>
-            <span class="tag ${crClass}">${esc(o.courier)}</span>
-            ${o.isKilat ? '<div style="margin-top:4px"><span class="tag kilat">⚡ Pesanan Kilat</span></div>' : ''}
-          </td>
-          <td><b>${esc(o.buyer)}</b><div class="muted">${esc(o.note || '-')}</div></td>
-          <td>${itemsHtml}</td>
-          <td><span class="tag ${o.status === 'DRAFT' ? 'draft' : 'packing'}">${o.status === 'DRAFT' ? 'Draft' : 'Siap Packing'}</span></td>
-          <td>
-            <div style="display:flex;flex-direction:column;gap:5px;min-width:145px">
-              <button class="btn secondary sm" onclick="window._openEditModal('${o.id}')">✏️ Revisi Item/Qty</button>
-              ${o.status === 'DRAFT' ? `<button class="btn warning sm" onclick="window._setPacking('${o.id}')">📦 Mulai Packing</button>` : ''}
-              <button class="btn secondary sm" onclick="window._printSlip('${o.id}')">🖨️ Cetak Slip</button>
-              <button class="btn success sm" onclick="window._shipOrder('${o.id}')">🚚 Serahkan Kurir (OUT)</button>
-              <button class="btn danger sm" onclick="window._deleteDraft('${o.id}')">🗑️ Hapus</button>
-            </div>
-          </td>
-        </tr>
-      `;
-    }).join('') : '<tr><td colspan="6" class="empty">Tidak ada antrean draft atau packing.</td></tr>';
-
-    // Render Riwayat Terkirim (Shipped)
-    const qShip = $('search-shipped').value.toLowerCase();
-    const shipped = oms.orders
-      .filter(o => o.status === 'SHIPPED')
-      .filter(o => [o.orderNo, o.buyer, ...o.items.map(i => i.sku + ' ' + i.name)].join(' ').toLowerCase().includes(qShip));
-
-    $('shipped-rows').innerHTML = shipped.length ? shipped.map(o => `
-      <tr>
-        <td>${fmtDate(o.shippedAt)}</td>
-        <td><b>${esc(o.orderNo)}</b></td>
-        <td>
-          <span class="tag ${o.channel.toLowerCase()}">${esc(o.channel)}</span>
-          <span class="tag ${o.courier.toLowerCase()}">${esc(o.courier)}</span>
-          ${o.isKilat ? '<span class="tag kilat">⚡ Kilat</span>' : ''}
-        </td>
-        <td>${esc(o.buyer)}</td>
-        <td>${o.items.map(i => `<div>• <b>${esc(i.sku)}</b> × ${i.qty}</div>`).join('')}</td>
-        <td><button class="btn secondary sm" onclick="window._printSlip('${o.id}')">🖨️ Cetak Ulang</button></td>
-      </tr>
-    `).join('') : '<tr><td colspan="6" class="empty">Belum ada order terkirim.</td></tr>';
-
-    // Dropdown order terkirim di form retur
-    $('ret-order').innerHTML = '<option value="">-- Input Manual / Pilih No. Pesanan Terkirim --</option>' +
-      shipped.map(o => `<option value="${o.id}">${esc(o.orderNo)} (${esc(o.channel)} - ${esc(o.buyer)})</option>`).join('');
-
-    // Render Riwayat Retur
-    $('return-rows').innerHTML = oms.returns.length ? oms.returns.map(r => `
-      <tr>
-        <td>${fmtDate(r.time)}</td>
-        <td><b>${esc(r.ref)}</b></td>
-        <td><span class="tag ${r.channel.toLowerCase()}">${esc(r.channel)}</span></td>
-        <td><b>${esc(r.sku)}</b> — ${esc(r.name)} (<b>×${r.qty}</b>)</td>
-        <td>${r.restocked
-          ? '<span class="tag good">✅ Layak Pakai (+Stok IN)</span>'
-          : '<span class="tag retur">❌ Rusak (Tidak Restock)</span>'}</td>
-        <td>${esc(r.reason || '-')}</td>
-      </tr>
-    `).join('') : '<tr><td colspan="6" class="empty">Belum ada catatan barang retur.</td></tr>';
-
-    // Render Tab Cek Stok Gudang
-    const qStock = $('search-stock').value.toLowerCase();
-    const prods = sf.products.filter(p => [p.sku, p.name, p.category].join(' ').toLowerCase().includes(qStock));
-    $('stock-rows').innerHTML = prods.length ? prods.map(p => {
-      const fisik = getStock(sf, p.sku);
-      const booked = getReservedStock(oms, p.sku);
-      const bebas = fisik - booked;
-      return `
-        <tr>
-          <td><b>${esc(p.sku)}</b></td>
-          <td>${esc(p.name)}</td>
-          <td>${esc(p.category || '-')}</td>
-          <td><b>${fmt(fisik)}</b></td>
-          <td>${booked > 0 ? `<span class="tag packing">${fmt(booked)} unit</span>` : '0'}</td>
-          <td><span class="tag ${bebas <= 0 ? 'out' : bebas <= p.minimum ? 'low' : 'good'}">${fmt(bebas)} unit</span></td>
-        </tr>
-      `;
-    }).join('') : '<tr><td colspan="6" class="empty">Master barang di StockFlow masih kosong. Tambahkan barang di StockFlow atau klik tombol isi contoh di atas.</td></tr>';
+  function updateInfo() {
+    const p = product($('tx-sku').value);
+    $('tx-info').textContent = p
+      ? `${p.name} | Harga: ${rp(p.price || 0)} | Stok tersedia: ${fmt(stock(p))} unit | Minimum: ${fmt(p.minimum)} unit`
+      : 'Masukkan SKU yang sudah terdaftar untuk melihat stok.';
   }
 
-  // Navigasi Tab
-  document.querySelectorAll('[data-tab]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b === btn));
-      ['create', 'drafts', 'shipped', 'returns', 'stock'].forEach(t => {
-        $('tab-' + t).classList.toggle('hidden', t !== btn.dataset.tab);
-      });
-      renderAll();
+  // --- RENDER ALL VIEWS ---
+  function render() {
+    const ps = db.products;
+    const ts = [...db.transactions].sort((a, b) => b.time.localeCompare(a.time));
+    const ords = [...db.orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    const rets = [...db.returns].sort((a, b) => b.time.localeCompare(a.time));
+
+    // Stats Dashboard
+    $('s-products').textContent = fmt(ps.length);
+    $('s-stock').textContent = fmt(ps.reduce((n, p) => n + stock(p), 0));
+    $('s-drafts').textContent = fmt(ords.filter(o => o.status === 'DRAFT').length);
+    const low = ps.filter(p => stock(p) <= p.minimum);
+    $('s-low').textContent = fmt(low.length);
+
+    $('low-list').innerHTML = low.length
+      ? low.map(p => `<div style="padding:9px 0;border-bottom:1px solid #2b384d"><b>${esc(p.name)}</b> <span class="muted">(${esc(p.sku)})</span><div class="muted">Sisa ${fmt(stock(p))} • minimum ${fmt(p.minimum)}</div></div>`).join('')
+      : '<div class="empty">Semua stok aman ✨</div>';
+
+    $('recent-list').innerHTML = ts.length
+      ? ts.slice(0, 6).map(t => `<div style="padding:9px 0;border-bottom:1px solid #2b384d"><b>${t.type === 'IN' ? '⬇ Masuk' : '⬆ Keluar'} ${fmt(t.qty)} unit</b> <span class="muted">(${esc(t.sku)})</span><div class="muted">${esc(t.ref || '-')} • ${esc(t.party || '-')} • ${date(t.time)}</div></div>`).join('')
+      : '<div class="empty">Belum ada transaksi</div>';
+
+    // Master Barang Table & Datalist
+    const q = $('product-search').value.toLowerCase();
+    $('product-rows').innerHTML = ps.filter(p => [p.sku, p.name, p.category].join(' ').toLowerCase().includes(q)).map(p => {
+      const n = stock(p);
+      return `<tr>
+        <td><b>${esc(p.sku)}</b></td>
+        <td>${esc(p.name)}</td>
+        <td>${esc(p.category || '-')}</td>
+        <td>${rp(p.price || 0)}</td>
+        <td><b>${fmt(n)}</b></td>
+        <td>${fmt(p.minimum)}</td>
+        <td><span class="tag ${n === 0 ? 'out' : n <= p.minimum ? 'low' : 'good'}">${n === 0 ? 'Habis' : n <= p.minimum ? 'Menipis' : 'Aman'}</span></td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="7" class="empty">Belum ada barang di Master Barang</td></tr>';
+
+    $('sku-options').innerHTML = ps.map(p => `<option value="${esc(p.sku)}">${esc(p.name)} (Stok: ${stock(p)})</option>`).join('');
+
+    // Orders Table
+    const fChan = $('filter-ord-channel').value;
+    const fStat = $('filter-ord-status').value;
+    const fSearch = $('search-orders').value.toLowerCase();
+
+    const filteredOrds = ords.filter(o => {
+      if (fChan && o.channel !== fChan) return false;
+      if (fStat && o.status !== fStat) return false;
+      if (fSearch) {
+        const hay = [o.orderNumber, o.buyer, o.courier, o.items.map(i => i.sku + ' ' + i.name).join(' ')].join(' ').toLowerCase();
+        if (!hay.includes(fSearch)) return false;
+      }
+      return true;
     });
+
+    $('orders-tbody').innerHTML = filteredOrds.map(o => {
+      const chanClass = o.channel.toLowerCase();
+      const itemsHtml = o.items.map(i => `<div><b>${fmt(i.qty)}x</b> ${esc(i.name)} <span class="muted">(${esc(i.sku)})</span></div>`).join('');
+      const statusBadge = o.status === 'DRAFT'
+        ? `<span class="tag warn">Draft Packing</span>`
+        : o.status === 'PACKED'
+          ? `<span class="tag good">Selesai Packing</span>`
+          : `<span class="tag out">Diretur</span>`;
+
+      const actionBtns = o.status === 'DRAFT'
+        ? `<div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="btn success sm" onclick="confirmPackOrder('${o.id}')" title="Potong stok & selesaikan packing">✅ Pack</button>
+            <button class="btn secondary sm" onclick="editOrderDraft('${o.id}')" title="Edit barang, qty, atau harga">✏️ Revisi</button>
+            <button class="btn secondary sm" onclick="openPackingSlip('${o.id}')" title="Cetak packing list">🖨️</button>
+            <button class="btn danger sm" onclick="deleteOrderDraft('${o.id}')" title="Hapus draft">🗑️</button>
+          </div>`
+        : `<div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="btn secondary sm" onclick="openPackingSlip('${o.id}')">🖨️ Slip</button>
+          </div>`;
+
+      return `<tr>
+        <td>
+          <span class="tag ${chanClass}">${esc(o.channel)}</span>
+          ${o.serviceType === 'Pesanan Kilat' ? '<div style="margin-top:4px"><span class="tag kilat">⚡ Pesanan Kilat</span></div>' : ''}
+          <div class="muted" style="margin-top:4px">${date(o.createdAt)}</div>
+        </td>
+        <td>
+          <b>${esc(o.orderNumber)}</b>
+          <div class="muted">Penerima: ${esc(o.buyer)}</div>
+          ${o.note ? `<div class="muted" style="color:#ffd28a">📝 ${esc(o.note)}</div>` : ''}
+        </td>
+        <td>
+          <div><b>${esc(o.serviceType)}</b></div>
+          <div class="muted">${esc(o.courier)}</div>
+        </td>
+        <td>${itemsHtml}</td>
+        <td>
+          <div class="muted">Awal: ${rp(o.grossTotal)}</div>
+          <div class="muted" style="color:#ffa7b3">Diskon: -${rp(o.totalDiscount)}</div>
+          <div style="font-weight:700;color:#a1f0ce">Akhir: ${rp(o.netTotal)}</div>
+        </td>
+        <td>${statusBadge}</td>
+        <td>${actionBtns}</td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="7" class="empty">Belum ada order / packing draft</td></tr>';
+
+    // Dropdown Order untuk Retur
+    const packedOrds = ords.filter(o => o.status === 'PACKED');
+    $('ret-order-select').innerHTML = `<option value="">-- Input Manual / Pilih Order Selesai --</option>` +
+      packedOrds.map(o => `<option value="${o.id}">[${esc(o.channel)}] ${esc(o.orderNumber)} - ${esc(o.buyer)}</option>`).join('');
+
+    // Returns Table
+    $('returns-tbody').innerHTML = rets.map(r => `
+      <tr>
+        <td>${date(r.time)}</td>
+        <td><span class="tag ${r.channel.toLowerCase()}">${esc(r.channel)}</span> <b style="margin-left:4px">${esc(r.ref)}</b></td>
+        <td><b>${esc(r.sku)}</b><div class="muted">${esc(r.name)}</div></td>
+        <td><b>+${fmt(r.qty)}</b></td>
+        <td>${r.condition === 'RESTOCK'
+          ? '<span class="tag good">✅ Kembali ke Stok</span>'
+          : '<span class="tag out">❌ Rusak (Non-Stok)</span>'}</td>
+        <td>${esc(r.reason || '-')}<div class="muted">Oleh: ${esc(r.user || '-')}</div></td>
+      </tr>
+    `).join('') || '<tr><td colspan="6" class="empty">Belum ada riwayat barang retur</td></tr>';
+
+    // History Table
+    const hq = $('history-search').value.toLowerCase();
+    $('history-rows').innerHTML = ts.filter(t => [t.sku, t.name, t.ref, t.party, t.user].join(' ').toLowerCase().includes(hq)).map(t => `
+      <tr>
+        <td>${date(t.time)}</td>
+        <td><span class="tag ${t.type === 'IN' ? 'good' : 'out'}">${t.type}</span></td>
+        <td><b>${esc(t.sku)}</b><div class="muted">${esc(t.name)}</div></td>
+        <td><b>${t.type === 'IN' ? '+' : '−'}${fmt(t.qty)}</b></td>
+        <td>${esc(t.ref || '-')}</td>
+        <td>${esc(t.party || '-')}</td>
+        <td>${esc(t.user || '-')}</td>
+      </tr>
+    `).join('') || '<tr><td colspan="7" class="empty">Belum ada transaksi stok</td></tr>';
+
+    updateInfo();
+  }
+
+  // Navigation Tabs
+  document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('active', x === b));
+    ['dashboard', 'orders', 'returns', 'products', 'transaction', 'history', 'backup'].forEach(id => $(id).classList.toggle('hidden', id !== b.dataset.tab));
+    render();
+  }));
+
+  ['product-search', 'history-search', 'search-orders'].forEach(id => $(id).addEventListener('input', render));
+  ['filter-ord-channel', 'filter-ord-status'].forEach(id => $(id).addEventListener('change', render));
+  $('tx-sku').addEventListener('input', updateInfo);
+
+  // Export & Restore
+  $('export-tx').addEventListener('click', () => download('stockflow-transaksi.csv', csv([
+    ['Waktu', 'Tipe', 'SKU', 'Nama', 'Jumlah', 'Invoice/Order', 'Supplier/Tujuan', 'Petugas'],
+    ...db.transactions.map(t => [t.time, t.type, t.sku, t.name, t.qty, t.ref, t.party, t.user])
+  ]), 'text/csv;charset=utf-8'));
+
+  $('export-products').addEventListener('click', () => download('stockflow-stok.csv', csv([
+    ['SKU', 'Nama', 'Kategori', 'Harga Default', 'Stok Awal', 'Masuk', 'Keluar', 'Stok Akhir', 'Minimum'],
+    ...db.products.map(p => [
+      p.sku, p.name, p.category, p.price || 0, p.opening,
+      db.transactions.filter(t => t.sku === p.sku && t.type === 'IN').reduce((a, t) => a + t.qty, 0),
+      db.transactions.filter(t => t.sku === p.sku && t.type === 'OUT').reduce((a, t) => a + t.qty, 0),
+      stock(p), p.minimum
+    ])
+  ]), 'text/csv;charset=utf-8'));
+
+  $('export-orders-csv').addEventListener('click', () => download('stockflow-orders.csv', csv([
+    ['Waktu', 'Aplikasi', 'No Pesanan', 'Pembeli', 'Layanan', 'Ekspedisi', 'Status', 'Harga Awal', 'Total Diskon', 'Harga Akhir', 'Detail Item'],
+    ...db.orders.map(o => [
+      o.createdAt, o.channel, o.orderNumber, o.buyer, o.serviceType, o.courier, o.status,
+      o.grossTotal, o.totalDiscount, o.netTotal,
+      o.items.map(i => `${i.sku} (${i.qty}x)`).join('; ')
+    ])
+  ]), 'text/csv;charset=utf-8'));
+
+  $('export-json').addEventListener('click', () => download(
+    'stockflow-full-backup-' + new Date().toISOString().slice(0, 10) + '.json',
+    JSON.stringify(db, null, 2),
+    'application/json'
+  ));
+
+  $('restore-file').addEventListener('change', async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    try {
+      const x = JSON.parse(await f.text());
+      if (!Array.isArray(x.products) || !Array.isArray(x.transactions)) throw Error('Format backup tidak valid');
+      if (!Array.isArray(x.orders)) x.orders = [];
+      if (!Array.isArray(x.returns)) x.returns = [];
+      if (!confirm('Ganti seluruh data saat ini dengan isi backup?')) return;
+      db = x;
+      save();
+      resetOrderForm();
+      render();
+      toast('Backup berhasil dipulihkan.');
+    } catch (err) {
+      toast('Gagal memulihkan: ' + err.message);
+    } finally {
+      e.target.value = '';
+    }
   });
 
-  // Event listeners filter & pencarian
-  ['filter-channel', 'filter-courier', 'search-draft', 'search-shipped', 'search-stock'].forEach(id => {
-    $(id).addEventListener('input', renderAll);
-  });
-
-  // Sinkronisasi otomatis antar tab browser jika stockflow.html dibuka bersamaan
-  window.addEventListener('storage', e => {
-    if (e.key === SF_KEY || e.key === OMS_KEY) renderAll();
-  });
-
-  // Inisialisasi awal
-  syncChannelRules('ord-channel', 'ord-courier', 'ord-kilat', 'kilat-wrapper');
-  renderDraftBuilder();
-  renderAll();
+  // Init
+  resetOrderForm();
+  render();
 })();
 </script>
 </body>
